@@ -1,0 +1,53 @@
+include ../components/AppHeader.component.pug
+include ../components/AppNavigationDrawer.component.pug
+include ../components/AppFooter.component.pug
+
+doctype html
+html(lang=language, dir="ltr")
+	head
+		block head
+			meta(charset="UTF-8")
+			meta(http-equiv="X-UA-Compatible", content="ie=edge")
+			meta(name="viewport", content="width=device-width, initial-scale=1.0")
+			block meta
+			title= `${PageProps.title} · ${PageProps.titlePrefix}` || siteSettings.meta_title
+			meta(name="description", content= PageProps.metaDescription || siteSettings.meta_description)
+			meta(name="keywords", content= PageProps.metaKeywords || siteSettings.meta_keywords)
+			meta(name="author", content="Ce-tek Spray Nozzle")
+			meta(name="theme-color", content="#e50637")
+			block styles
+				link(rel="preconnect", href="https://fonts.googleapis.com")
+				link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+				link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap")
+				link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/keen-slider@latest/keen-slider.min.css")
+				link(rel="stylesheet", href='/css/tailwind.css')
+			link(rel="icon", type="image/png", sizes="192x192", href="/img/favicon.png")
+			script(src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js", defer)
+
+	body(
+		x-cloak,
+		x-data,
+		x-bind:class="{ 'overflow-hidden': $store.navigationDrawer.on }"
+	)
+		#app
+			block fixed
+				+AppNavigationDrawer
+
+			block header
+				+AppHeader
+
+			// main.main-content
+			main(
+				class="transition duration-300",
+				x-bind:class="{ 'ease-in -translate-x-[300px]': $store.navigationDrawer.on, 'ease-out': !$store.navigationDrawer.on }"
+			)
+				block body
+			// ## main.main-content
+
+			block footer
+				+AppFooter
+
+			block scripts
+				script(src="https://cdn.jsdelivr.net/npm/keen-slider@latest/keen-slider.js")
+				script(src="https://cdnjs.cloudflare.com/ajax/libs/fslightbox/3.0.9/index.min.js")
+				script(src="/js/main.js")

@@ -1,0 +1,127 @@
+extends ../../layouts/Default.layout.pug
+
+include ./components/Hero.component.pug
+include ./components/Services.component.pug
+include ./components/About.component.pug
+include ./components/SectoralNozzles.component.pug
+
+block prepend head
+	- PageProps.title = pageSettings.meta_title
+	- PageProps.metaDescription = pageSettings.meta_description
+	- PageProps.metaKeywords = pageSettings.meta_keywords
+
+block body
+	+SectionHero
+	+SectionServices
+	+SectionAbout
+	+SectionSectoralNozzles
+
+block append scripts
+	script.
+		document.addEventListener("DOMContentLoaded", () => {
+			const PageHomeHeroSlider = new KeenSlider(
+				"#PageHomeHeroSlider",
+				{
+					loop: true,
+					slides: {
+						perView: 1,
+					},
+				},
+				[
+					(slider) => {
+						let timeout;
+						let mouseOver = false;
+						function clearNextTimeout() {
+							clearTimeout(timeout);
+						}
+						function nextTimeout() {
+							clearTimeout(timeout);
+							if (mouseOver) return;
+							timeout = setTimeout(() => {
+								slider.next();
+							}, 2000);
+						}
+						slider.on("created", () => {
+							slider.container.addEventListener("mouseover", () => {
+								mouseOver = true;
+								clearNextTimeout();
+							});
+							slider.container.addEventListener("mouseout", () => {
+								mouseOver = false;
+								nextTimeout();
+							});
+							nextTimeout();
+						});
+						slider.on("dragStarted", clearNextTimeout);
+						slider.on("animationEnded", nextTimeout);
+						slider.on("updated", nextTimeout);
+					},
+				],
+			);
+
+			const $PageHomeHeroSliderPrevButton = document.getElementById("PageHomeHeroSliderPrevButton");
+			const $PageHomeHeroSliderNextButton = document.getElementById("PageHomeHeroSliderNextButton");
+
+			$PageHomeHeroSliderPrevButton.addEventListener("click", () => PageHomeHeroSlider.prev());
+			$PageHomeHeroSliderNextButton.addEventListener("click", () => PageHomeHeroSlider.next());
+
+			const PageHomeSectoralNozzlesSlider = new KeenSlider(
+				"#PageHomeSectoralNozzlesSlider",
+				{
+					loop: true,
+					slides: {
+						perView: 1,
+					},
+					breakpoints: {
+						"(min-width: 640px)": {
+							slides: { perView: 2 },
+						},
+						"(min-width: 1024px)": {
+							slides: { perView: 3 },
+						},
+						"(min-width: 1280px)": {
+							slides: { perView: 3 },
+						},
+						"(min-width: 1536px)": {
+							slides: { perView: 4 },
+						},
+					},
+				},
+				[
+					(slider) => {
+						let timeout;
+						let mouseOver = false;
+						function clearNextTimeout() {
+							clearTimeout(timeout);
+						}
+						function nextTimeout() {
+							clearTimeout(timeout);
+							if (mouseOver) return;
+							timeout = setTimeout(() => {
+								slider.next();
+							}, 2000);
+						}
+						slider.on("created", () => {
+							slider.container.addEventListener("mouseover", () => {
+								mouseOver = true;
+								clearNextTimeout();
+							});
+							slider.container.addEventListener("mouseout", () => {
+								mouseOver = false;
+								nextTimeout();
+							});
+							nextTimeout();
+						});
+						slider.on("dragStarted", clearNextTimeout);
+						slider.on("animationEnded", nextTimeout);
+						slider.on("updated", nextTimeout);
+					},
+				],
+			);
+
+			//- const $PageHomeHeroSliderPrevButton = document.getElementById("PageHomeHeroSliderPrevButton");
+			//- const $PageHomeHeroSliderNextButton = document.getElementById("PageHomeHeroSliderNextButton");
+
+			//- $PageHomeHeroSliderPrevButton.addEventListener("click", () => PageHomeHeroSlider.prev());
+			//- $PageHomeHeroSliderNextButton.addEventListener("click", () => PageHomeHeroSlider.next());
+		});

@@ -1,0 +1,45 @@
+mixin SectionServices
+	section
+		div(class="container")
+			div(class="grid grid-cols-1 lg:grid-cols-12")
+				div(class="lg:col-span-4")
+					div(class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1")
+						div(class="lg:px-4")
+							div(class="bg-neutral-100 p-8 flex flex-col justify-center gap-3 h-72 lg:h-96 xl:h-72")
+								h2(class="text-4xl leading-tight")!= pageSettings.services_section.title
+								p!= pageSettings.services_section.description
+
+						div(class="bg-[#b3002b] lg:h-96 xl:h-72")
+							img(src=pageSettings.services_section.image.url, alt="alt", class="w-full h-full object-contain")
+
+						div(class="hidden lg:block")
+							div(class="px-4")
+								div(class="bg-neutral-100 h-20")
+
+
+				div(class="flex flex-col lg:col-span-8")
+					div(class="grid grid-cols-1 items-start sm:grid-cols-2")
+						each service, index in pageSettings.services_section.services
+							div(
+								class="flex flex-col px-8 py-8 lg:py-0 sm:h-60 md:h-auto lg:h-96 xl:h-72",
+								class={
+									"border-b": index === 0 || index === 1,
+									"sm:border-l": index === 1 || index === 3,
+									"border-b sm:border-b-0": index === 2,
+									"border-b box-content": index === 0 || index === 1
+								}
+							)
+								div(
+									class="flex-grow flex flex-col justify-center gap-4",
+									class={
+										"sm:mt-7 md:mt-0": index === 0 && language === "en"
+									}
+								)
+									img(
+										src=service.icon.url,
+										width="80",
+										height="80",
+										alt="alt",
+										class="object-cover"
+									)
+									h4(class="text-lg font-semibold")= service.title

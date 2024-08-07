@@ -1,0 +1,47 @@
+extends ../../layouts/Default.layout.pug
+
+include ../../components/Breadcrumbs.component.pug
+include ./components/Form.component.pug
+
+block prepend head
+	- PageProps.title = pageSettings.meta_title
+	- PageProps.metaDescription = pageSettings.meta_description
+	- PageProps.metaKeywords = pageSettings.meta_keywords
+
+block body
+	section(class="relative")
+		img(
+			src=pageSettings.background_image.url,
+			srcset=`${pageSettings.background_image.sizes["2048x2048"]} ${pageSettings.background_image.sizes["2048x2048-width"]}w, ${pageSettings.background_image.sizes["1536x1536"]} ${pageSettings.background_image.sizes["1536x1536-width"]}w, ${pageSettings.background_image.sizes["large"]} ${pageSettings.background_image.sizes["large-width"]}w, ${pageSettings.background_image.sizes["medium_large"]} ${pageSettings.background_image.sizes["medium_large-width"]}w, ${pageSettings.background_image.sizes["medium"]} ${pageSettings.background_image.sizes["medium-width"]}w`
+			alt=pageSettings.meta_title,
+			class="absolute top-0 left-0 w-full h-full object-cover"
+		)
+		div(class="relative bg-neutral-800 bg-opacity-40 pt-28 pb-40")
+			div(class="py-24")
+				div(class="container")
+					div(class="flex flex-col items-center justify-center text-center gap-4 max-w-screen-sm mx-auto")
+						h1(class="text-white text-5xl font-bold text-center")= pageSettings.page_title
+						+Breadcrumbs([
+							{
+								href: t('pages.home.href'),
+								label: t('pages.home.label'),
+							},
+							{
+								href: t('pages.contact.href'),
+								label: t('pages.contact.label'),
+							},
+						])
+
+
+	+SectionForm
+
+	section
+		iframe(
+			src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6093.914399657271!2d28.950322!3d40.210015!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14ca1152f389840f%3A0xcf2168fd634dc1f5!2zw5zDp2V2bGVyLCBUYW5heSBDZC4gTm86MjUsIDE2MTIwIE5pzIdsw7xmZXIvQnVyc2EsIFTDvHJraXll!5e0!3m2!1str!2sus!4v1722979348437!5m2!1str!2sus"
+			height="450",
+			style="border:0;",
+			allowfullscreen="",
+			loading="lazy",
+			referrerpolicy="no-referrer-when-downgrade",
+			class="w-full"
+		)

@@ -1,0 +1,10 @@
+extends ../../layouts/Default.layout.pug
+
+block prepend head
+	- PageProps.title = "Title"
+	- PageProps.metaDescription = "Meta description"
+	- PageProps.metaKeywords = "Meta keywords"
+
+block body
+	.container
+		code= JSON.stringify(productCategories)

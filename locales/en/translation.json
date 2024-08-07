@@ -1,0 +1,81 @@
+{
+	"pages": {
+		"home": {
+			"href": "/",
+			"label": "Home"
+		},
+		"products": {
+			"href": "/products",
+			"label": "Products"
+		},
+		"sectoralNozzles": {
+			"href": "/#PageHomeSectionSectoralNozzles",
+			"label": "Sectoral Nozzles"
+		},
+		"gallery": {
+			"href": "/gallery",
+			"label": "Gallery"
+		},
+		"contact": {
+			"href": "/contact",
+			"label": "Contact"
+		}
+	},
+
+	"navbar": {
+		"products": {
+			"href": "/products",
+			"label": "Products"
+		},
+		"sectoralNozzles": {
+			"href": "/#PageHomeSectionSectoralNozzles",
+			"label": "Sectoral Nozzles"
+		},
+		"gallery": {
+			"href": "/gallery",
+			"label": "Gallery"
+		},
+		"contact": {
+			"href": "/contact",
+			"label": "Contact"
+		},
+		"seeAllProducts": {
+			"href": "/products",
+			"label": "See all products"
+		}
+	},
+
+	"pageHome": {
+		"title": "Book shop",
+		"total": "There are {{counter}} books in the list",
+		"buttonText": "Refresh button",
+		"buttonHTML": "<button onClick='window.location.reload();'>$t(buttonText)</button>",
+		"sectionAbout": {
+			"buttonProducts": {
+				"href": "/products",
+				"label": "See all products"
+			},
+			"buttonContact": {
+				"href": "/contact",
+				"label": "Contact with us"
+			}
+		}
+	},
+
+	"pageContact": {
+		"sectionForm": {
+			"title": "Contact <strong>Form</strong>",
+			"description": "If you wish, you can contact us via <a href=\"{{ hrefFacebook }}\" target=\"_blank\">Facebook</a>, <a href=\"{{ hrefTwitter }}\" target=\"_blank\">Twitter</a> or <a href=\"{{ hrefInstagram }}\" target=\"_blank\">Instagram</a>.",
+			"form": {
+				"fullName": "Full name",
+				"eMail": "E-mail address",
+				"phoneNumber": "Phone number",
+				"companyName": "Company name",
+				"topic": "Topic you wish to discuss",
+				"message": "Message",
+				"askPermission": "I accept that my submitted data will be stored and retained.",
+				"sendMessage": "Send Message"
+			}
+		}
+	}
+}

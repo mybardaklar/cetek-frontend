@@ -1,0 +1,10 @@
+mixin SectoralNozzleCard(item)
+	div(class="flex-grow p-4 rounded shadow-lg border border-neutral-50 transition group/card hover:-translate-y-2 hover:shadow-xl")
+		div(class="flex flex-col gap-4")
+			div(class="relative")
+				div(class="rounded overflow-hidden")
+					img(src=item.acf.image.sizes["medium_large"], alt="alt", class="transition group-hover/card:scale-105")
+				div(class="absolute -bottom-10 right-0 bg-cetek-600 w-20 h-20 inline-flex items-center justify-center p-2")
+					img(src="/img/logo-white.svg", alt="alt")
+			div
+				h4(class="font-medium text-lg mr-24")= item.title.rendered

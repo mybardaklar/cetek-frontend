@@ -1,0 +1,18 @@
+include ../../../components/SectoralNozzleCard.component.pug
+
+mixin SectionSectoralNozzles
+	section(class="relative py-24")
+		div(id="PageHomeSectionSectoralNozzles", class="absolute -top-16 left-0 pointer-events-none w-full h-48")
+		div(class="container")
+			div(class="flex flex-col")
+				div(class="grid grid-cols-1 items-center gap-4 px-4 sm:px-0 md:grid-cols-2")
+					div(class="flex flex-col gap-2")
+						h3(class="font-semibold text-cetek-600")!= pageSettings.sectoralNozzlesSection.subtitle
+						h2(class="text-4xl")!= pageSettings.sectoralNozzlesSection.title
+					p!= pageSettings.sectoralNozzlesSection.description
+
+				div(class="sm:-mx-4")
+					div(id="PageHomeSectoralNozzlesSlider", class="keen-slider")
+						each sectoralNozzle in sectoralNozzles
+							div(class="keen-slider__slide px-4 py-8 flex flex-col")
+								+SectoralNozzleCard(sectoralNozzle)

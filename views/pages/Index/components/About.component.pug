@@ -1,0 +1,31 @@
+mixin SectionAbout
+	section(class="bg-neutral-100 py-24")
+		div(class="container")
+			div(class="grid grid-cols-1 gap-8 px-4 sm:px-0 lg:grid-cols-12")
+				div(class="lg:col-span-7")
+					div(class="flex flex-col gap-4")
+						h2(class="font-semibold text-cetek-600")!= pageSettings.about_section.subtitle
+						h1(class="text-4xl")!= pageSettings.about_section.title
+						div(
+							class="[&_h4]:font-semibold [&_p:not(:last-child)]:mb-4"
+						)!= pageSettings.about_section.description
+
+						ul(class="grid grid-cols-1 gap-4 mt-4 xs:grid-cols-2")
+							each item in pageSettings.about_section.list
+								li(class="flex gap-2")
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="text-cetek-600 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 384 384"><path d="M275.312 140.688c-6.24-6.248-16.384-6.248-22.624 0L184 209.368l-28.688-28.68c-6.24-6.248-16.384-6.248-22.624 0-6.248 6.248-6.248 16.376 0 22.624l40 40C175.808 246.44 179.904 248 184 248s8.192-1.56 11.312-4.688l80-80c6.248-6.248 6.248-16.376 0-22.624z"></path><path d="M368 176c-8.832 0-16 7.168-16 16 0 88.224-71.776 160-160 160S32 280.224 32 192 103.776 32 192 32c42.952 0 83.272 16.784 113.544 47.264 6.216 6.28 16.352 6.312 22.624.08 6.272-6.224 6.304-16.352.08-22.624C291.928 20.144 243.536 0 192 0 86.128 0 0 86.128 0 192s86.128 192 192 192 192-86.128 192-192c0-8.832-7.168-16-16-16z"></path></svg>
+									span= item.service
+
+						div(class="flex flex-col gap-2 mt-4 xs:flex-row")
+							a(
+								href=t("pageHome.sectionAbout.buttonProducts.href"),
+								class="inline-flex items-center justify-center bg-cetek-600 text-white h-12 px-8 rounded font-medium border border-solid border-transparent transition leading-none shadow-lg hover:shadow-2xl hover:hover:-translate-y-1 hover:bg-cetek-700 active:ring-1 active:ring-cetek-800 active:ring-offset-2 active:bg-cetek-800"
+							)= t("pageHome.sectionAbout.buttonProducts.label")
+							a(
+								href=t("pageHome.sectionAbout.buttonContact.href"),
+								class="inline-flex items-center justify-center bg-slate-600 text-white h-12 px-8 rounded font-medium border border-solid border-transparent transition leading-none shadow-lg hover:shadow-2xl hover:-translate-y-1 hover:bg-slate-700 active:ring-1 active:ring-slate-800 active:ring-offset-2 active:bg-slate-800"
+							)= t("pageHome.sectionAbout.buttonContact.label")
+
+				div(class="-order-1 flex flex-col lg:col-span-5 lg:order-none")
+					div(class="rounded-md overflow-hidden lg:flex-grow flex flex-col")
+						img(src=pageSettings.about_section.image.url, alt="alt", class="flex-grow w-full object-cover max-h-")

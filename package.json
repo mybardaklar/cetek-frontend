@@ -1,15 +1,42 @@
 {
-  "name": "express-vercel",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.18.2",
-    "uuid": "^9.0.1"
-  }
+	"name": "cetek-frontend",
+	"private": true,
+	"version": "1.0.0",
+	"description": "",
+	"main": "api/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"prettier": "prettier . --write",
+		"dev": "tailwindcss -i ./assets/css/tailwind.css -o ./public/css/tailwind.css --watch",
+		"build": "tailwindcss build -i ./assets/css/tailwind.css -o ./public/css/tailwind.css"
+	},
+	"author": "myB <myasarbardaklar47@gmail.com>",
+	"license": "ISC",
+	"dependencies": {
+		"@vercel/node": "^3.2.8",
+		"concurrently": "^8.2.2",
+		"cookie-parser": "^1.4.6",
+		"dotenv": "^16.4.5",
+		"express": "^4.18.2",
+		"http-errors": "^2.0.0",
+		"i18next": "^23.12.2",
+		"i18next-fs-backend": "^2.3.2",
+		"i18next-http-middleware": "^3.6.0",
+		"ioredis": "^5.4.1",
+		"morgan": "^1.10.0",
+		"pug": "^3.0.3",
+		"redis": "^4.7.0"
+	},
+	"devDependencies": {
+		"@tailwindcss/forms": "^0.5.7",
+		"@tailwindcss/typography": "^0.5.13",
+		"autoprefixer": "^10.4.20",
+		"axios": "^1.7.3",
+		"postcss": "^8.4.40",
+		"postcss-cli": "^11.0.0",
+		"postcss-sort-media-queries": "^5.2.0",
+		"prettier": "^3.3.3",
+		"tailwindcss": "^3.4.7",
+		"tailwindcss-animate": "^1.0.7"
+	}
 }

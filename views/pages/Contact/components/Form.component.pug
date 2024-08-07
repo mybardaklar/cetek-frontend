@@ -1,0 +1,141 @@
+mixin SectionForm
+	-
+		const socialMedia =  {
+			hrefFacebook: siteSettings.website_settings.social_media['facebook'],
+			hrefTwitter: siteSettings.website_settings.social_media['twitter'],
+			hrefInstagram: siteSettings.website_settings.social_media['instagram'],
+		}
+
+	section(class="relative -mt-40")
+		div(class="container")
+			div(class="px-2 sm:px-0")
+				div(class="bg-white border border-neutral-200 shadow rounded-lg px-4 py-8 xs:px-8")
+					div(class="flex flex-col gap-8")
+						div(class="flex flex-col items-center justify-center gap-2 text-center")
+							h3(class="text-3xl")!= t('pageContact.sectionForm.title')
+							p(class="[&_a]:text-cetek-600 [&_a:hover]:text-cetek-800")!= t('pageContact.sectionForm.description', socialMedia)
+
+						form
+							div(class="grid grid-cols-1 gap-4 sm:grid-cols-6")
+								div(class="sm:col-span-3 lg:col-span-2")
+									label(
+										class="relative flex items-end h-14 text-sm bg-neutral-50 border border-neutral-200 rounded cursor-text transition select-none",
+										x-data="{ value: '', focus: false }",
+										x-bind:class="{ 'ring-1 ring-slate-900 ring-opacity-40': focus }"
+									)
+										input(
+											type="text",
+											class="block w-full h-7 text-sm px-3 py-0 -translate-y-1 bg-transparent border-none focus:ring-0",
+											x-model="value",
+											@focus="focus = true",
+											@blur="focus = false"
+										)
+										span(
+											class="absolute top-1/2 left-3 pointer-events-none transition text-sm origin-top-left",
+											x-bind:class="{ '-translate-y-5 scale-[0.8]': value !== '' || focus, '-translate-y-1/2': value === '' }"
+										)= t('pageContact.sectionForm.form.fullName')
+											span(class="text-red-600")  *
+
+								div(class="sm:col-span-3 lg:col-span-2")
+									label(
+										class="relative flex items-end h-14 text-sm bg-neutral-50 border border-neutral-200 rounded cursor-text transition select-none",
+										x-data="{ value: '', focus: false }",
+										x-bind:class="{ 'ring-1 ring-slate-900 ring-opacity-40': focus }"
+									)
+										input(
+											type="email",
+											class="block w-full h-7 text-sm px-3 py-0 -translate-y-1 bg-transparent border-none focus:ring-0",
+											x-model="value",
+											@focus="focus = true",
+											@blur="focus = false"
+										)
+										span(
+											class="absolute top-1/2 left-3 pointer-events-none transition text-sm origin-top-left",
+											x-bind:class="{ '-translate-y-5 scale-[0.8]': value !== '' || focus, '-translate-y-1/2': value === '' }"
+										)= t('pageContact.sectionForm.form.eMail')
+											span(class="text-red-600")  *
+
+								div(class="sm:col-span-3 lg:col-span-2")
+									label(
+										class="relative flex items-end h-14 text-sm bg-neutral-50 border border-neutral-200 rounded cursor-text transition select-none",
+										x-data="{ value: '', focus: false }",
+										x-bind:class="{ 'ring-1 ring-slate-900 ring-opacity-40': focus }"
+									)
+										input(
+											type="email",
+											class="block w-full h-7 text-sm px-3 py-0 -translate-y-1 bg-transparent border-none focus:ring-0",
+											x-model="value",
+											@focus="focus = true",
+											@blur="focus = false"
+										)
+										span(
+											class="absolute top-1/2 left-3 pointer-events-none transition text-sm origin-top-left",
+											x-bind:class="{ '-translate-y-5 scale-[0.8]': value !== '' || focus, '-translate-y-1/2': value === '' }"
+										)= t('pageContact.sectionForm.form.phoneNumber')
+											span(class="text-red-600")  *
+
+								div(class="sm:col-span-3 lg:col-span-3")
+									label(
+										class="relative flex items-end h-14 text-sm bg-neutral-50 border border-neutral-200 rounded cursor-text transition select-none",
+										x-data="{ value: '', focus: false }",
+										x-bind:class="{ 'ring-1 ring-slate-900 ring-opacity-40': focus }"
+									)
+										input(
+											type="text",
+											class="block w-full h-7 text-sm px-3 py-0 -translate-y-1 bg-transparent border-none focus:ring-0",
+											x-model="value",
+											@focus="focus = true",
+											@blur="focus = false"
+										)
+										span(
+											class="absolute top-1/2 left-3 pointer-events-none transition text-sm origin-top-left",
+											x-bind:class="{ '-translate-y-5 scale-[0.8]': value !== '' || focus, '-translate-y-1/2': value === '' }"
+										)= t('pageContact.sectionForm.form.companyName')
+
+								div(class="sm:col-span-6 lg:col-span-3")
+									label(
+										class="relative flex items-end h-14 text-sm bg-neutral-50 border border-neutral-200 rounded cursor-text transition select-none",
+										x-data="{ value: '', focus: false }",
+										x-bind:class="{ 'ring-1 ring-slate-900 ring-opacity-40': focus }"
+									)
+										input(
+											type="text",
+											class="block w-full h-7 text-sm px-3 py-0 -translate-y-1 bg-transparent border-none focus:ring-0",
+											x-model="value",
+											@focus="focus = true",
+											@blur="focus = false"
+										)
+										span(
+											class="absolute top-1/2 left-3 pointer-events-none transition text-sm origin-top-left",
+											x-bind:class="{ '-translate-y-5 scale-[0.8]': value !== '' || focus, '-translate-y-1/2': value === '' }"
+										)= t('pageContact.sectionForm.form.topic')
+
+								div(class="sm:col-span-6")
+									label(
+										class="relative flex text-sm bg-neutral-50 border border-neutral-200 rounded cursor-text transition select-none",
+										x-data="{ value: '', focus: false }",
+										x-bind:class="{ 'ring-1 ring-slate-900 ring-opacity-40': focus }"
+									)
+										textarea(
+											rows="8",
+											class="block w-full text-sm mt-7 px-3 py-0 bg-transparent border-none focus:ring-0",
+											x-model="value",
+											@focus="focus = true",
+											@blur="focus = false"
+										)
+										span(
+											class="absolute top-4 left-3 pointer-events-none transition text-sm origin-top-left",
+											x-bind:class="{ '-translate-y-2 scale-[0.8]': value !== '' || focus, }"
+										)= t('pageContact.sectionForm.form.message')
+											span(class="text-red-600")  *
+
+								div(class="flex flex-col sm:col-span-3")
+									div(class="flex-grow flex flex-col justify-center items-center sm:items-stretch")
+										label(class="inline-flex gap-2 select-none cursor-pointer")
+											input(type="checkbox", name="", class="rounded translate-y-[3px]")
+											span(class="text-sm")= t('pageContact.sectionForm.form.askPermission')
+												span(class="text-red-600")  *
+
+								div(class="sm:col-span-3")
+									div(class="text-center sm:text-right")
+										button(class="flex w-full items-center justify-center bg-cetek-600 text-white h-12 px-8 rounded font-medium border border-solid border-transparent transition leading-none shadow-lg hover:shadow-2xl hover:hover:-translate-y-1 hover:bg-cetek-700 active:ring-1 active:ring-cetek-800 active:ring-offset-2 active:bg-cetek-800 xs:inline-flex xs:w-auto")= t('pageContact.sectionForm.form.sendMessage')

@@ -1,0 +1,84 @@
+{
+	"pages": {
+		"home": {
+			"href": "/",
+			"label": "Ana Sayfa"
+		},
+		"products": {
+			"href": "/urunler",
+			"label": "Ürünlerimiz"
+		},
+		"sectoralNozzles": {
+			"href": "/#PageHomeSectionSectoralNozzles",
+			"label": "Sektörel Nozullar"
+		},
+		"gallery": {
+			"href": "/galeri",
+			"label": "Galeri"
+		},
+		"contact": {
+			"href": "/iletisim",
+			"label": "İletişim"
+		}
+	},
+
+	"navbar": {
+		"products": {
+			"href": "/urunler",
+			"label": "Ürünlerimiz"
+		},
+		"sectoralNozzles": {
+			"href": "/#PageHomeSectionSectoralNozzles",
+			"label": "Sektörel Nozullar"
+		},
+		"gallery": {
+			"href": "/galeri",
+			"label": "Galeri"
+		},
+		"contact": {
+			"href": "/iletisim",
+			"label": "İletişim"
+		},
+		"seeAllProducts": {
+			"href": "/urunler",
+			"label": "Tüm ürünleri gör"
+		}
+	},
+
+	"home": {
+		"title": "Kitap mağazası",
+		"total": "Listede toplamda {{counter}} tane kitap var",
+		"buttonText": "Yenileme butonu",
+		"buttonHTML": "<button onClick='window.location.reload();'>$t(buttonText)</button>"
+	},
+
+	"pageHome": {
+		"sectionAbout": {
+			"buttonProducts": {
+				"href": "/urunler",
+				"label": "Tüm ürünleri gör"
+			},
+			"buttonContact": {
+				"href": "/iletisim",
+				"label": "İletişime geç"
+			}
+		}
+	},
+
+	"pageContact": {
+		"sectionForm": {
+			"title": "İletişim <strong>Formu</strong>",
+			"description": "Dilerseniz bizlerle <a href=\"{{ hrefFacebook }}\" target=\"_blank\">Facebook</a>, <a href=\"{{ hrefTwitter }}\" target=\"_blank\">Twitter</a> veya <a href=\"{{ hrefInstagram }}\" target=\"_blank\">Instagram</a> aracılığıyla iletişime geçebilirsiniz.",
+			"form": {
+				"fullName": "İsim ve soyisim",
+				"eMail": "E-posta adresi",
+				"phoneNumber": "Telefon numarası",
+				"companyName": "Şirket ismi",
+				"topic": "İletişime geçmek istediğiniz konu",
+				"message": "Mesaj",
+				"askPermission": "Gönderilen verilerimin depolanacağını ve saklanacağını kabul ediyorum.",
+				"sendMessage": "Mesajı Gönder"
+			}
+		}
+	}
+}

@@ -1,0 +1,123 @@
+mixin AppHeader
+	header(
+		class="container px-2 fixed top-2 left-1/2 z-10 sm:px-4 sm:top-4 transition duration-300",
+		x-bind:class="{ 'ease-in -translate-x-[calc(50%+300px)]': $store.navigationDrawer.on, 'ease-out -translate-x-1/2': !$store.navigationDrawer.on }"
+	)
+			div(class="flex justify-center")
+				div(class="w-full")
+					div(class="h-24 bg-white border border-neutral-50 shadow flex items-center px-4 rounded")
+						a(href="/", class="inline-block w-40")
+							img(
+								src=siteSettings.website_settings.header_logo.sizes['medium'],
+								alt=siteSettings.website_settings.header_logo.alt,
+								class="w-full"
+							)
+						+AppHeaderNavbar
+						.mr-auto
+						+AppHeaderLanguageSwitcher
+						button(
+							class="border border-border w-12 h-10 rounded lg:hidden flex flex-col items-center justify-center ml-2",
+							x-on:click="$store.navigationDrawer.toggle();"
+						)
+							div(
+								class="flex flex-col items-center justify-center transition duration-300",
+								x-bind:class="{ 'ease-in -rotate-90': $store.navigationDrawer.on, 'ease-out': !$store.navigationDrawer.on }"
+							)
+								span(class="h-[2px] block w-6 bg-gray-600 mb-1")
+								span(class="h-[2px] block w-6 bg-gray-600 mb-1")
+								span(class="h-[2px] block w-6 bg-gray-600")
+
+mixin AppHeaderNavbar
+	nav(class="hidden ml-6 lg:block")
+		ul(class="flex items-center")
+			li(
+				class="relative group/dropdown",
+			)
+				span(
+					class="inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 group-hover/dropdown:bg-accent/50 group-hover/dropdown:pointer-events-none"
+				)= t("navbar.products.label")
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" class="ml-1 transition group-hover/dropdown:rotate-180"><path fill="currentColor" d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6l-6-6z"/></svg>
+
+				div(
+					class="absolute top-full left-0 transition ease-in duration-300 delay-150 opacity-0 scale-90 pointer-events-none group-hover/dropdown:ease-out group-hover/dropdown:delay-0 group-hover/dropdown:opacity-100 group-hover/dropdown:scale-100 group-hover/dropdown:pointer-events-auto"
+				)
+					div(class="bg-white border rounded shadow mt-1 overflow-hidden")
+						ul(
+							class="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] transition ease-in duration-300 opacity-0 -translate-x-1/2 group-hover/dropdown:ease-out group-hover/dropdown:delay-150 group-hover/dropdown:opacity-100 group-hover/dropdown:translate-x-0"
+						)
+							each productCategory in someProductCategories
+								if language === "tr"
+									li
+										a(
+											href=`/${productCategory.slug}-urunler`,
+											class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+										)
+											div(class="text-sm font-medium leading-none")= productCategory.name
+											p(class="line-clamp-2 text-sm leading-snug text-muted-foreground")= productCategory.description
+								else
+									li
+										a(
+											href=`/${productCategory.slug}-products`,
+											class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+										)
+											div(class="text-sm font-medium leading-none")= productCategory.name
+											p(class="line-clamp-2 text-sm leading-snug text-muted-foreground")= productCategory.description
+							li(class="col-span-2")
+								a(
+									href=t("navbar.seeAllProducts.href"),
+									class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+								)
+									div(class="text-sm font-medium leading-none")= t("navbar.seeAllProducts.label")
+
+			li
+				a(
+					href=t("navbar.sectoralNozzles.href"),
+					class="inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+				)= t("navbar.sectoralNozzles.label")
+			li
+				a(
+					href=t("navbar.gallery.href"),
+					class="inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+				)= t("navbar.gallery.label")
+			li
+				a(
+					href=t("navbar.contact.href"),
+					class="inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+				)= t("navbar.contact.label")
+
+mixin AppHeaderLanguageSwitcher
+	div(class="hidden relative group/dropdown xs:block")
+		button(class="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 w-32 group-hover/dropdown:pointer-events-none")
+			span(class="pointer-events-none")
+				div(class="flex items-center gap-2")
+					img(src=`https://flagcdn.com/16x12/${ language === "tr" ? "tr" : "us" }.png`, alt="alt", width="16", height="12")
+					| #{ language === "tr" ? "Türkçe" : "English" }
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" class="ml-1 transition group-hover/dropdown:rotate-180"><path fill="currentColor" d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6l-6-6z"/></svg>
+
+		div(
+			class="absolute top-full left-0 w-full transition-all invisible opacity-0 scale-90 pointer-events-none group-hover/dropdown:visible group-hover/dropdown:opacity-100 group-hover/dropdown:scale-100 group-hover/dropdown:pointer-events-auto"
+		)
+			div(class="bg-white border rounded shadow p-1 mt-1")
+				div(class="flex flex-col")
+					a(
+						href="?lng=tr",
+						class="flex items-center gap-2 px-3 py-2 rounded-md text-sm hover:bg-accent hover:text-accent-foreground",
+						class={ "bg-accent/50": language === "tr" }
+					)
+						div(class="w-4")
+							if language === "tr"
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"/></svg>
+						div(class="flex items-center gap-2")
+							img(src="https://flagcdn.com/16x12/tr.png", alt="alt", width="16", height="12")
+							| Türkçe
+					a(
+						href="?lng=en",
+						class="flex items-center gap-2 px-3 py-2 rounded-md text-sm hover:bg-accent hover:text-accent-foreground",
+						class={ "bg-accent/50": language === "en" }
+					)
+						div(class="w-4")
+							if language === "en"
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"/></svg>
+						div(class="flex items-center gap-2")
+							img(src="https://flagcdn.com/16x12/us.png", alt="alt", width="16", height="12")
+							| English

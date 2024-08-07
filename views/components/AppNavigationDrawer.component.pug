@@ -1,0 +1,128 @@
+mixin AppNavigationDrawer
+	section(
+		class="fixed top-0 left-0 z-20 w-full h-full flex justify-end",
+		x-show="$store.navigationDrawer.on"
+	)
+		div(
+			class="absolute top-0 left-0 w-full h-full",
+			x-on:click="$store.navigationDrawer.toggle();"
+		)
+		div(
+			class="w-full max-w-[300px] flex-grow bg-white border-l border-neutral-100 shadow-lg relative overflow-x-hidden overflow-y-auto flex flex-col",
+			x-show="$store.navigationDrawer.on",
+			x-transition:enter="transition ease-in duration-300",
+			x-transition:enter-start="translate-x-full",
+			x-transition:enter-end="",
+			x-transition:leave="transition ease-out duration-300",
+			x-transition:leave-start="",
+			x-transition:leave-end="translate-x-full"
+		)
+			div(class="flex-grow flex flex-col divide-y divide-neutral-100")
+				div(class="flex items-center gap-4 px-2 py-4")
+					a(href="/", class="inline-flex w-40 items-center justify-start")
+						img(
+							src=siteSettings.website_settings.header_logo.sizes['medium'],
+							alt=siteSettings.website_settings.header_logo.alt,
+							class="w-full"
+						)
+					+AppNavigationLanguageSwitcher
+
+				div(class="flex flex-col")
+					nav
+						ul(class="flex flex-col p-2")
+							li(
+								x-data="{ on: false }",
+								x-bind:class="{ 'bg-neutral-50 border-border mb-2': on, 'border-transparent': !on }",
+								class="relative rounded-md border"
+							)
+								a(
+									href=t("navbar.products.href"),
+									class="flex h-10 items-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+									x-on:click.prevent="on = !on;"
+									x-bind:class="{ 'border-b border-border': on }"
+								)= t("navbar.products.label")
+									.mr-auto
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" x-bind:class="{ 'rotate-180': on }" viewBox="0 0 24 24" class="ml-1"><path fill="currentColor" d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6l-6-6z"/></svg>
+
+								div(x-show="on", x-on:click.outside="on = false;")
+									ul(class="flex flex-col gap-1 p-1")
+										each productCategory in someProductCategories
+											if language === "tr"
+												li
+													a(
+														href=`/${productCategory.slug}-urunler`,
+														class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+													)
+														div(class="text-sm font-medium leading-none")= productCategory.name
+														p(class="line-clamp-2 text-sm leading-snug text-muted-foreground")= productCategory.description
+											else
+												li
+													a(
+														href=`/${productCategory.slug}-products`,
+														class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+													)
+														div(class="text-sm font-medium leading-none")= productCategory.name
+														p(class="line-clamp-2 text-sm leading-snug text-muted-foreground")= productCategory.description
+										li
+											a(
+												href=t("navbar.seeAllProducts.href"),
+												class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+											)
+												div(class="text-sm font-medium leading-none")= t("navbar.seeAllProducts.label")
+
+							li(class="border border-transparent")
+								a(
+									href=t("navbar.sectoralNozzles.href"),
+									class="flex h-10 items-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+								)= t("navbar.sectoralNozzles.label")
+							li(class="border border-transparent")
+								a(
+									href=t("navbar.gallery.href"),
+									class="flex h-10 items-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+								)= t("navbar.gallery.label")
+							li(class="border border-transparent")
+								a(
+									href=t("navbar.contact.href"),
+									class="flex h-10 items-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+								)= t("navbar.contact.label")
+
+				div(class="flex flex-col p-4 mt-auto")
+					if language === "tr"
+						p(class="text-xs text-neutral-400") Telif hakları &copy; #{new Date().getFullYear()} Ce-Tek Spray Nozzle. Her hakkı saklıdır.
+					else
+						p(class="text-xs text-neutral-400") Copyright &copy; #{new Date().getFullYear()} Ce-Tek Spray Nozzle. All rights reserved.
+
+mixin AppNavigationLanguageSwitcher
+	div(class="relative z-10 group/dropdown")
+		button(class="flex w-32 h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 group-hover/dropdown:pointer-events-none")
+			span(class="pointer-events-none")
+				div(class="flex items-center gap-2")
+					img(src=`https://flagcdn.com/16x12/${ language === "tr" ? "tr" : "us" }.png`, alt="alt", width="16", height="12")
+					| #{ language === "tr" ? "Türkçe" : "English" }
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" class="ml-1 transition group-hover/dropdown:rotate-180"><path fill="currentColor" d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6l-6-6z"/></svg>
+
+		div(class="absolute top-full left-0 w-full transition-all invisible opacity-0 scale-90 pointer-events-none group-hover/dropdown:visible group-hover/dropdown:opacity-100 group-hover/dropdown:scale-100 group-hover/dropdown:pointer-events-auto")
+			div(class="bg-white border rounded shadow p-1 mt-1")
+				div(class="flex flex-col")
+					a(
+						href="?lng=tr",
+						class="flex items-center gap-2 px-3 py-2 rounded-md text-sm hover:bg-accent hover:text-accent-foreground",
+						class={ "bg-accent/50": language === "tr" }
+					)
+						div(class="w-4")
+							if language === "tr"
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"/></svg>
+						div(class="flex items-center gap-2")
+							img(src="https://flagcdn.com/16x12/tr.png", alt="alt", width="16", height="12")
+							| Türkçe
+					a(
+						href="?lng=en",
+						class="flex items-center gap-2 px-3 py-2 rounded-md text-sm hover:bg-accent hover:text-accent-foreground",
+						class={ "bg-accent/50": language === "en" }
+					)
+						div(class="w-4")
+							if language === "en"
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="m9.55 18l-5.7-5.7l1.425-1.425L9.55 15.15l9.175-9.175L20.15 7.4z"/></svg>
+						div(class="flex items-center gap-2")
+							img(src="https://flagcdn.com/16x12/us.png", alt="alt", width="16", height="12")
+							| English
