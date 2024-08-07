@@ -8,7 +8,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"prettier": "prettier . --write",
 		"dev": "tailwindcss -i ./assets/css/tailwind.css -o ./public/css/tailwind.css --watch",
-		"build": "tailwindcss build -i ./assets/css/tailwind.css -o ./public/css/tailwind.css"
+		"buildStyles": "tailwindcss build -i ./assets/css/tailwind.css -o ./public/css/tailwind.css"
 	},
 	"author": "myB <myasarbardaklar47@gmail.com>",
 	"license": "ISC",
