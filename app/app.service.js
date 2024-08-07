@@ -57,29 +57,29 @@ class AppService {
 		}
 	}
 
-	/* async findAllProductCategories() {
+	async getProductsPageSettings(lang) {
 		try {
-			const request = await axiosInstance.get(
-				`/product_category?_fields=id,slug,name,description,count,lang,translations,acf&acf_format=standard&per_page=100&lang=${this.siteLanguage}`,
-			);
-
-			return request.data;
-		} catch (error) {
-			console.error(error);
-		}
-	} */
-
-	async getContactPageSettings(lang) {
-		try {
-			console.log("service:getContactPageSettings");
+			console.log("service:getProductsPageSettings");
 
 			const request = await axiosInstance.get(
-				`/pages/${lang === "en" ? 975 : 973}?_fields=acf&acf_format=standard`,
+				`/pages/${lang === "en" ? 983 : 981}?_fields=acf&acf_format=standard`,
 			);
 
 			return request.data.acf;
 		} catch (error) {
 			console.log(error);
+		}
+	}
+
+	async getProductCategories(lang) {
+		try {
+			const request = await axiosInstance.get(
+				`/product_category?_fields=id,slug,name,description,count,lang,translations,acf&acf_format=standard&per_page=100&lang=${lang}`,
+			);
+
+			return request.data;
+		} catch (error) {
+			console.error(error);
 		}
 	}
 
@@ -108,6 +108,20 @@ class AppService {
 			return request.data;
 		} catch (error) {
 			console.error(error);
+		}
+	}
+
+	async getContactPageSettings(lang) {
+		try {
+			console.log("service:getContactPageSettings");
+
+			const request = await axiosInstance.get(
+				`/pages/${lang === "en" ? 975 : 973}?_fields=acf&acf_format=standard`,
+			);
+
+			return request.data.acf;
+		} catch (error) {
+			console.log(error);
 		}
 	}
 }

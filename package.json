@@ -13,6 +13,7 @@
 	"author": "myB <myasarbardaklar47@gmail.com>",
 	"license": "ISC",
 	"dependencies": {
+		"@vercel/kv": "^2.0.0",
 		"@vercel/node": "^3.2.8",
 		"concurrently": "^8.2.2",
 		"cookie-parser": "^1.4.6",
@@ -22,10 +23,8 @@
 		"i18next": "^23.12.2",
 		"i18next-fs-backend": "^2.3.2",
 		"i18next-http-middleware": "^3.6.0",
-		"ioredis": "^5.4.1",
 		"morgan": "^1.10.0",
-		"pug": "^3.0.3",
-		"redis": "^4.7.0"
+		"pug": "^3.0.3"
 	},
 	"devDependencies": {
 		"@tailwindcss/forms": "^0.5.7",

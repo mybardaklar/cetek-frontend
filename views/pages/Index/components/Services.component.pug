@@ -10,7 +10,11 @@ mixin SectionServices
 								p!= pageSettings.services_section.description
 
 						div(class="bg-[#b3002b] lg:h-96 xl:h-72")
-							img(src=pageSettings.services_section.image.url, alt="alt", class="w-full h-full object-contain")
+							img(
+								src=pageSettings.services_section.image.url,
+								alt="alt",
+								class="w-full h-full object-contain"
+							)
 
 						div(class="hidden lg:block")
 							div(class="px-4")

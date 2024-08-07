@@ -1,10 +1,35 @@
 extends ../../layouts/Default.layout.pug
 
+include ../../components/Breadcrumbs.component.pug
+
 block prepend head
-	- PageProps.title = "Title"
-	- PageProps.metaDescription = "Meta description"
-	- PageProps.metaKeywords = "Meta keywords"
+	- PageProps.title = pageSettings.meta_title
+	- PageProps.metaDescription = pageSettings.meta_description
+	- PageProps.metaKeywords = pageSettings.meta_keywords
 
 block body
+	section(class="relative")
+		img(
+			src=pageSettings.background_image.url,
+			srcset=`${pageSettings.background_image.sizes["2048x2048"]} ${pageSettings.background_image.sizes["2048x2048-width"]}w, ${pageSettings.background_image.sizes["1536x1536"]} ${pageSettings.background_image.sizes["1536x1536-width"]}w, ${pageSettings.background_image.sizes["large"]} ${pageSettings.background_image.sizes["large-width"]}w, ${pageSettings.background_image.sizes["medium_large"]} ${pageSettings.background_image.sizes["medium_large-width"]}w, ${pageSettings.background_image.sizes["medium"]} ${pageSettings.background_image.sizes["medium-width"]}w`
+			alt=pageSettings.meta_title,
+			class="absolute top-0 left-0 w-full h-full object-cover"
+		)
+		div(class="relative bg-neutral-800 bg-opacity-40 pt-28")
+			div(class="py-24")
+				div(class="container")
+					div(class="flex flex-col items-center justify-center text-center gap-4 max-w-screen-sm mx-auto")
+						h1(class="text-white text-5xl font-bold text-center")= pageSettings.page_title
+						+Breadcrumbs([
+							{
+								href: t('pages.home.href'),
+								label: t('pages.home.label'),
+							},
+							{
+								href: t('pages.products.href'),
+								label: t('pages.products.label'),
+							},
+						])
+
 	.container
 		code= JSON.stringify(productCategories)
