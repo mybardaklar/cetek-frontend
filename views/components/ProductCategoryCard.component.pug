@@ -1,0 +1,21 @@
+mixin ProductCategoryCard(item)
+	div(class="flex-grow p-4 rounded-md shadow-lg bg-white border border-neutral-50 transition group/card hover:-translate-y-2 hover:shadow-xl")
+		div(class="flex flex-col gap-4")
+			a(
+				href=`/${item.slug}${t('slugPrefixes.products')}`,
+				class="block rounded overflow-hidden"
+			)
+				img(src=item.acf.image.sizes["medium_large"], alt="alt", class="transition group-hover/card:scale-105")
+
+			div(class="flex flex-col gap-4")
+				div(class="flex gap-4")
+					h4(class="font-medium text-lg")
+						a(href=`/${item.slug}${t('slugPrefixes.products')}`)= item.name
+					div(class="mr-auto")
+					a(
+						href=`/${item.slug}${t('slugPrefixes.products')}`,
+						class="inline-flex translate-y-1 transition group-hover/card:text-cetek-600"
+					)
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path fill="currentColor" d="M200 64v104a8 8 0 0 1-16 0V83.31L69.66 197.66a8 8 0 0 1-11.32-11.32L172.69 72H88a8 8 0 0 1 0-16h104a8 8 0 0 1 8 8"/></svg>
+
+				p(class="text-neutral-400 text-sm")= item.description

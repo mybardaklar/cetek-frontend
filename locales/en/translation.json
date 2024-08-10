@@ -1,4 +1,8 @@
 {
+	"slugPrefixes": {
+		"products": "-products"
+	},
+
 	"pages": {
 		"home": {
 			"href": "/",
@@ -59,6 +63,14 @@
 				"href": "/contact",
 				"label": "Contact with us"
 			}
+		}
+	},
+
+	"pageProductCategories": {
+		"hero": {
+			"subtitle": "Nozzle &amp; Spare Part",
+			"title": "We Provide the <strong>Best Production</strong> in Every Aspect",
+			"description": "Our company was established in İzmir, and production is carried out in factories both abroad and in Turkey. We supply many parts such as nozzles, air reeds, eductors, spare parts, and quick couplings."
 		}
 	},
 

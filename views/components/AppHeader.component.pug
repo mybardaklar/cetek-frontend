@@ -46,22 +46,13 @@ mixin AppHeaderNavbar
 							class="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] transition ease-in duration-300 opacity-0 -translate-x-1/2 group-hover/dropdown:ease-out group-hover/dropdown:delay-150 group-hover/dropdown:opacity-100 group-hover/dropdown:translate-x-0"
 						)
 							each productCategory in someProductCategories
-								if language === "tr"
-									li
-										a(
-											href=`/${productCategory.slug}-urunler`,
-											class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-										)
-											div(class="text-sm font-medium leading-none")= productCategory.name
-											p(class="line-clamp-2 text-sm leading-snug text-muted-foreground")= productCategory.description
-								else
-									li
-										a(
-											href=`/${productCategory.slug}-products`,
-											class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-										)
-											div(class="text-sm font-medium leading-none")= productCategory.name
-											p(class="line-clamp-2 text-sm leading-snug text-muted-foreground")= productCategory.description
+								li
+									a(
+										href=`/${productCategory.slug}${t('slugPrefixes.products')}`,
+										class="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+									)
+										div(class="text-sm font-medium leading-none")= productCategory.name
+										p(class="line-clamp-2 text-sm leading-snug text-muted-foreground")= productCategory.description
 							li(class="col-span-2")
 								a(
 									href=t("navbar.seeAllProducts.href"),
