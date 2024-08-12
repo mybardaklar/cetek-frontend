@@ -1,9 +1,13 @@
 {
 	"slugPrefixes": {
-		"products": "-urunlerimiz"
+		"products": "-urunler"
 	},
 
 	"pages": {
+		"error": {
+			"href": "/",
+			"label": "Hata"
+		},
 		"home": {
 			"href": "/",
 			"label": "Ana Sayfa"
@@ -54,6 +58,22 @@
 		"total": "Listede toplamda {{counter}} tane kitap var",
 		"buttonText": "Yenileme butonu",
 		"buttonHTML": "<button onClick='window.location.reload();'>$t(buttonText)</button>"
+	},
+
+	"noProducts": "Maalesef şu anda ürün stoğumuz bulunmamaktadır. Ürünlerimizin kalitesi ve müşteri memnuniyetine verdiğimiz önem doğrultusunda, en kısa sürede stoklarımızı yenilemek için çalışmalarımıza devam ediyoruz. Güncel ürünlerimiz ve yeniliklerimizden haberdar olmak için sitemizi sık sık ziyaret etmenizi öneririz. Siz değerli müşterilerimize en iyi hizmeti sunmak için buradayız. Anlayışınız için teşekkür eder, iyi alışverişler dileriz.",
+
+	"pageError": {
+		"meta_title": "Sayfa Bulunamadı!",
+		"title": "Aradığınız Sayfa Bulunamadı",
+		"description": "Aradığınız sayfa kaldırılmış, taşınmış veya hiç var olmamış olabilir. Ana sayfaya yönlendirilmek aşağıdaki butona  tıklayın.",
+		"buttonHome": {
+			"href": "/",
+			"label": "Ana sayfaya dön"
+		},
+		"buttonContact": {
+			"href": "/iletisim",
+			"label": "İletişime geç"
+		}
 	},
 
 	"pageHome": {

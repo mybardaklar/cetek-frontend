@@ -1,0 +1,26 @@
+extends ../../layouts/Default.layout.pug
+
+include ../../components/Breadcrumbs.component.pug
+include ../../components/ProductCard.component.pug
+
+block prepend head
+	- PageProps.title = t('pageError.meta_title')
+	- PageProps.metaDescription = ""
+	- PageProps.metaKeywords = ""
+
+block body
+	section(class="relative pt-28")
+		div(class="py-32")
+			div(class="container")
+				div(class="flex flex-col items-center gap-4 text-center max-w-screen-sm mx-auto")
+					h1(class="text-5xl font-bold text-center")= t('pageError.title')
+					p(class="text-neutral-500")= t('pageError.description')
+					div(class="flex flex-col gap-2 mt-4 xs:flex-row")
+						a(
+							href=t("pageError.buttonHome.href"),
+							class="inline-flex items-center justify-center bg-cetek-600 text-white h-12 px-8 rounded font-medium border border-solid border-transparent transition leading-none shadow-lg hover:shadow-2xl hover:hover:-translate-y-1 hover:bg-cetek-700 active:ring-1 active:ring-cetek-800 active:ring-offset-2 active:bg-cetek-800"
+						)= t("pageError.buttonHome.label")
+						a(
+							href=t("pageError.buttonContact.href"),
+							class="inline-flex items-center justify-center bg-slate-600 text-white h-12 px-8 rounded font-medium border border-solid border-transparent transition leading-none shadow-lg hover:shadow-2xl hover:-translate-y-1 hover:bg-slate-700 active:ring-1 active:ring-slate-800 active:ring-offset-2 active:bg-slate-800"
+						)= t("pageError.buttonContact.label")

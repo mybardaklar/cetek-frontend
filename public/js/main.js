@@ -64,8 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		],
 	);
 
-	fsLightbox.props.type = "image";
-
 	/* const $PageHomeHeroSliderPrevButton = document.getElementById("PageHomeHeroSliderPrevButton");
 	const $PageHomeHeroSliderNextButton = document.getElementById("PageHomeHeroSliderNextButton");
 

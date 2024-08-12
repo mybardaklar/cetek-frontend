@@ -83,6 +83,18 @@ class AppService {
 		}
 	}
 
+	async getProductsByCategory(lang, categoryId) {
+		try {
+			const request = await axiosInstance.get(
+				`/product?_fields=id,status,slug,title,product_category,acf,lang,translations&acf_format=standard&per_page=100&lang=${lang}&product_category=${categoryId}`,
+			);
+
+			return request.data;
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
 	async getGalleryPageSettings(lang) {
 		try {
 			console.log("service:getGalleryPageSettings");

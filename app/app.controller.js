@@ -244,7 +244,7 @@ class AppController {
 		let productCategories = null;
 		const cachedProductCategories = await kv.get("productCategories");
 		if (cachedProductCategories) {
-			productCategories = cachedProductCategories[res.locals.language];
+			productCategories = cachedProductCategories;
 		} else {
 			const enProductCategories = await appService.getProductCategories("en");
 			const trProductCategories = await appService.getProductCategories("tr");
@@ -255,7 +255,6 @@ class AppController {
 			};
 
 			await kv.set("productCategories", JSON.stringify(productCategories));
-			productCategories = await productCategories[res.locals.language];
 		}
 
 		if (req.params.link === "urunler") {
@@ -263,17 +262,94 @@ class AppController {
 
 			return res.render("pages/ProductCategory/ProductCategory.page.pug", {
 				pageSettings,
-				productCategories,
+				productCategories: productCategories[res.locals.language],
 			});
 		} else if (req.params.link === "products") {
 			if (res.locals.language !== "en") return res.redirect("/urunler");
 
 			return res.render("pages/ProductCategory/ProductCategory.page.pug", {
 				pageSettings,
-				productCategories,
+				productCategories: productCategories[res.locals.language],
 			});
-		} else if (req.params.link.includes("urunler")) {
+		} else if (req.params.link.includes(req.t("-urunler"))) {
+			const slug = req.params.link.replace("-urunler", "");
+
+			if (res.locals.language !== "tr") {
+				const productCategoryTranslations = productCategories.tr.filter(
+					(item) => item.slug === slug,
+				)[0];
+
+				if (productCategoryTranslations) {
+					const productCategory = productCategories.en.filter(
+						(item) => item.id === productCategoryTranslations.translations.en,
+					)[0];
+
+					if (productCategory) {
+						return res.redirect(`/${productCategory.slug}-products`);
+					}
+
+					return res.status(404).render("pages/Error/Error.page.pug");
+				}
+
+				return res.status(404).render("pages/Error/Error.page.pug");
+			}
+
+			let currentCategory = productCategories["tr"].filter((item) => item.slug === slug)[0];
+			if (currentCategory) {
+				const products = await appService.getProductsByCategory(
+					res.locals.language,
+					currentCategory.id,
+				);
+
+				return res.render("pages/ProductDetail/ProductDetail.page.pug", {
+					pageSettings,
+					currentCategory,
+					products,
+				});
+			}
+
+			return res.status(404).render("pages/Error/Error.page.pug");
+		} else if (req.params.link.includes(req.t("-products"))) {
+			const slug = req.params.link.replace("-products", "");
+
+			if (res.locals.language !== "en") {
+				const productCategoryTranslations = productCategories.en.filter(
+					(item) => item.slug === slug,
+				)[0];
+
+				if (productCategoryTranslations) {
+					const productCategory = productCategories.tr.filter(
+						(item) => item.id === productCategoryTranslations.translations.tr,
+					)[0];
+
+					if (productCategory) {
+						return res.redirect(`/${productCategory.slug}-urunler`);
+					}
+
+					return res.status(404).render("pages/Error/Error.page.pug");
+				}
+
+				return res.status(404).render("pages/Error/Error.page.pug");
+			}
+
+			let currentCategory = productCategories["en"].filter((item) => item.slug === slug)[0];
+			if (currentCategory) {
+				const products = await appService.getProductsByCategory(
+					res.locals.language,
+					currentCategory.id,
+				);
+
+				return res.render("pages/ProductDetail/ProductDetail.page.pug", {
+					pageSettings,
+					currentCategory,
+					products,
+				});
+			}
+
+			return res.status(404).render("pages/Error/Error.page.pug");
 		}
+
+		return res.status(404).render("pages/Error/Error.page.pug");
 	}
 }
 
