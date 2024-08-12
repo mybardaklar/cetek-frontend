@@ -86,6 +86,14 @@
 				"href": "/iletisim",
 				"label": "İletişime geç"
 			}
+		},
+		"sectionProductCategories": {
+			"hero": {
+				"title": "Her Açıdan <strong>En İyi</strong> Üretimi Veriyoruz"
+			},
+			"subtitle": "Nozzle &amp; Yedek Parça",
+			"title": "Her Açıdan <strong>En İyi</strong> Üretimi Veriyoruz",
+			"description": "Firmamız İzmir'de kurulmuş olup, üretim yurtdışındaki ve Türkiye'deki fabrikalarda yapılmaktadır. Nozzle, hava tarakları, edüktör, yedek parça ve quick coupling gibi bir çok parça tedariği sağlanmaktadır."
 		}
 	},
 
@@ -94,6 +102,14 @@
 			"subtitle": "Nozzle &amp; Yedek Parça",
 			"title": "Her Açıdan <strong>En İyi</strong> Üretimi Veriyoruz",
 			"description": "Firmamız İzmir'de kurulmuş olup, üretim yurtdışındaki ve Türkiye'deki fabrikalarda yapılmaktadır. Nozzle, hava tarakları, edüktör, yedek parça ve quick coupling gibi bir çok parça tedariği sağlanmaktadır."
+		}
+	},
+
+	"pageProductDetail": {
+		"relatedProductCategories": {
+			"subtitle": "Diğer Kategorilere Göz At",
+			"title": "Benzer Kategoriler",
+			"description": "Bu bölümde, göz atmakta olduğunuz içerikle ilgili benzer kategorilere kolayca ulaşabilirsiniz. İlgili kategoriler, aradığınız ürünlere veya incelemekte olduğunuz konulara benzer seçenekler sunarak, daha fazla keşif yapmanıza olanak tanır. Farklı ürün gruplarını ve içerikleri keşfederek, aradığınız bilgilere ve ürünlere daha hızlı ulaşabilirsiniz."
 		}
 	},
 

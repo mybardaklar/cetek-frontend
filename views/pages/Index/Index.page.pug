@@ -3,6 +3,8 @@ extends ../../layouts/Default.layout.pug
 include ./components/Hero.component.pug
 include ./components/Services.component.pug
 include ./components/About.component.pug
+include ./components/ProductCategories.component.pug
+include ./components/Testimonials.component.pug
 include ./components/SectoralNozzles.component.pug
 
 block prepend head
@@ -33,7 +35,7 @@ block append scripts
 							if (mouseOver) return;
 							timeout = setTimeout(() => {
 								slider.next();
-							}, 2000);
+							}, 4000);
 						}
 						slider.on("created", () => {
 							slider.container.addEventListener("mouseover", () => {
@@ -93,7 +95,7 @@ block append scripts
 							if (mouseOver) return;
 							timeout = setTimeout(() => {
 								slider.next();
-							}, 2000);
+							}, 4000);
 						}
 						slider.on("created", () => {
 							slider.container.addEventListener("mouseover", () => {
@@ -113,15 +115,123 @@ block append scripts
 				],
 			);
 
-			//- const $PageHomeHeroSliderPrevButton = document.getElementById("PageHomeHeroSliderPrevButton");
-			//- const $PageHomeHeroSliderNextButton = document.getElementById("PageHomeHeroSliderNextButton");
+			const $PageHomeSectoralNozzlesSliderPrevButton = document.getElementById("PageHomeSectoralNozzlesSliderPrevButton");
+			const $PageHomeSectoralNozzlesSliderNextButton = document.getElementById("PageHomeSectoralNozzlesSliderNextButton");
 
-			//- $PageHomeHeroSliderPrevButton.addEventListener("click", () => PageHomeHeroSlider.prev());
-			//- $PageHomeHeroSliderNextButton.addEventListener("click", () => PageHomeHeroSlider.next());
+			$PageHomeSectoralNozzlesSliderPrevButton.addEventListener("click", () => PageHomeSectoralNozzlesSlider.prev());
+			$PageHomeSectoralNozzlesSliderNextButton.addEventListener("click", () => PageHomeSectoralNozzlesSlider.next());
+
+			const PageHomeProductCategoriesSlider = new KeenSlider(
+				"#PageHomeProductCategoriesSlider",
+				{
+					loop: true,
+					slides: {
+						perView: 1,
+					},
+					breakpoints: {
+						"(min-width: 640px)": {
+							slides: { perView: 2 },
+						},
+						"(min-width: 1024px)": {
+							slides: { perView: 3 },
+						},
+						"(min-width: 1280px)": {
+							slides: { perView: 3 },
+						},
+						"(min-width: 1536px)": {
+							slides: { perView: 4 },
+						},
+					},
+				},
+				[
+					(slider) => {
+						let timeout;
+						let mouseOver = false;
+						function clearNextTimeout() {
+							clearTimeout(timeout);
+						}
+						function nextTimeout() {
+							clearTimeout(timeout);
+							if (mouseOver) return;
+							timeout = setTimeout(() => {
+								slider.next();
+							}, 4000);
+						}
+						slider.on("created", () => {
+							slider.container.addEventListener("mouseover", () => {
+								mouseOver = true;
+								clearNextTimeout();
+							});
+							slider.container.addEventListener("mouseout", () => {
+								mouseOver = false;
+								nextTimeout();
+							});
+							nextTimeout();
+						});
+						slider.on("dragStarted", clearNextTimeout);
+						slider.on("animationEnded", nextTimeout);
+						slider.on("updated", nextTimeout);
+					},
+				],
+			);
+
+			const $PageHomeProductCategoriesSliderPrevButton = document.getElementById("PageHomeProductCategoriesSliderPrevButton");
+			const $PageHomeProductCategoriesSliderNextButton = document.getElementById("PageHomeProductCategoriesSliderNextButton");
+
+			$PageHomeProductCategoriesSliderPrevButton.addEventListener("click", () => PageHomeProductCategoriesSlider.prev());
+			$PageHomeProductCategoriesSliderNextButton.addEventListener("click", () => PageHomeProductCategoriesSlider.next());
+
+			const PageHomeTestimonialsSlider = new KeenSlider(
+				"#PageHomeTestimonialsSlider",
+				{
+					loop: true,
+					slides: {
+						perView: 1,
+					},
+				},
+				[
+					(slider) => {
+						let timeout;
+						let mouseOver = false;
+						function clearNextTimeout() {
+							clearTimeout(timeout);
+						}
+						function nextTimeout() {
+							clearTimeout(timeout);
+							if (mouseOver) return;
+							timeout = setTimeout(() => {
+								slider.next();
+							}, 4000);
+						}
+						slider.on("created", () => {
+							slider.container.addEventListener("mouseover", () => {
+								mouseOver = true;
+								clearNextTimeout();
+							});
+							slider.container.addEventListener("mouseout", () => {
+								mouseOver = false;
+								nextTimeout();
+							});
+							nextTimeout();
+						});
+						slider.on("dragStarted", clearNextTimeout);
+						slider.on("animationEnded", nextTimeout);
+						slider.on("updated", nextTimeout);
+					},
+				],
+			);
+
+			const $PageHomeTestimonialsSliderPrevButton = document.getElementById("PageHomeTestimonialsSliderPrevButton");
+			const $PageHomeTestimonialsSliderNextButton = document.getElementById("PageHomeTestimonialsSliderNextButton");
+
+			$PageHomeTestimonialsSliderPrevButton.addEventListener("click", () => PageHomeTestimonialsSlider.prev());
+			$PageHomeTestimonialsSliderNextButton.addEventListener("click", () => PageHomeTestimonialsSlider.next());
 		});
 
 block body
 	+SectionHero
 	+SectionServices
 	+SectionAbout
+	+SectionProductCategories
+	+SectionTestimonials
 	+SectionSectoralNozzles

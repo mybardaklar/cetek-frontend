@@ -43,6 +43,15 @@ class AppController {
 			};
 			await kv.set("sectoralNozzles", JSON.stringify(sectoralNozzles));
 
+			// set sectoral nozzles to Vercel KV
+			const enHomeProductCategories = await appService.getProductCategories("en", 12);
+			const trHomeProductCategories = await appService.getProductCategories("tr", 12);
+			const homeProductCategories = {
+				en: enHomeProductCategories,
+				tr: trHomeProductCategories,
+			};
+			await kv.set("homeProductCategories", JSON.stringify(homeProductCategories));
+
 			// set contact page settings to Vercel KV
 			const enContactPageSettings = await appService.getContactPageSettings("en");
 			const trContactPageSettings = await appService.getContactPageSettings("tr");
@@ -72,7 +81,7 @@ class AppController {
 
 			return res.redirect("/");
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	}
 
@@ -114,12 +123,30 @@ class AppController {
 				sectoralNozzles = await sectoralNozzles[res.locals.language];
 			}
 
+			let homeProductCategories = null;
+			const cachedHomeProductCategories = await kv.get("homeProductCategories");
+			if (cachedHomeProductCategories) {
+				homeProductCategories = cachedHomeProductCategories[res.locals.language];
+			} else {
+				const enHomeProductCategories = await appService.getProductCategories("en", 12);
+				const trHomeProductCategories = await appService.getProductCategories("tr", 12);
+
+				homeProductCategories = {
+					en: enHomeProductCategories,
+					tr: trHomeProductCategories,
+				};
+
+				await kv.set("homeProductCategories", JSON.stringify(homeProductCategories));
+				homeProductCategories = await homeProductCategories[res.locals.language];
+			}
+
 			return res.render("pages/Index/Index.page.pug", {
 				pageSettings,
+				homeProductCategories,
 				sectoralNozzles,
 			});
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	}
 
@@ -161,7 +188,7 @@ class AppController {
 				pageSettings,
 			});
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	}
 
@@ -214,7 +241,7 @@ class AppController {
 				galleryImages,
 			});
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	}
 
@@ -353,15 +380,11 @@ class AppController {
 					req.params.link,
 				);
 
-				console.log(product);
-
 				if (product) {
 					const translatedProduct = await appService.getProductByID(
 						req.query.lng,
 						product.translations[req.query.lng],
 					);
-
-					console.log(product.translations[req.query.lng]);
 
 					if (translatedProduct) {
 						return res.redirect(`/${translatedProduct.slug}`);

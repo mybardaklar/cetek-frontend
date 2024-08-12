@@ -71,10 +71,11 @@ class AppService {
 		}
 	}
 
-	async getProductCategories(lang) {
+	async getProductCategories(lang, count) {
 		try {
+			const perPage = count ? `&per_page=${count}` : `&per_page=100`;
 			const request = await axiosInstance.get(
-				`/product_category?_fields=id,slug,name,description,count,lang,translations,acf&acf_format=standard&per_page=100&lang=${lang}`,
+				`/product_category?_fields=id,slug,name,description,count,lang,translations,acf&acf_format=standard${perPage}&lang=${lang}`,
 			);
 
 			return request.data;

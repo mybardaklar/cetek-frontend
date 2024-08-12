@@ -13,69 +13,70 @@ block append scripts
 	script(src="https://cdnjs.cloudflare.com/ajax/libs/fslightbox/3.0.9/index.min.js")
 	script.
 		fsLightbox.props.type = "image";
-
-		document.addEventListener("DOMContentLoaded", () => {
-			const ProductImagesSlider = new KeenSlider(
-				"#ProductImagesSlider",
-				{
-					loop: true,
-					slides: {
-						perView: 1,
-						spacing: 8
+	if product.acf.product_images.length
+		script.
+			document.addEventListener("DOMContentLoaded", () => {
+				const ProductImagesSlider = new KeenSlider(
+					"#ProductImagesSlider",
+					{
+						loop: true,
+						slides: {
+							perView: 1,
+							spacing: 8
+						},
+						breakpoints: {
+							"(min-width: 640px)": {
+								slides: { perView: 2, spacing: 32 },
+							},
+							"(min-width: 1024px)": {
+								slides: { perView: 3, spacing: 32 },
+							},
+							"(min-width: 1280px)": {
+								slides: { perView: 3, spacing: 32 },
+							},
+							"(min-width: 1536px)": {
+								slides: { perView: 4, spacing: 32 },
+							},
+						},
 					},
-					breakpoints: {
-						"(min-width: 640px)": {
-							slides: { perView: 2, spacing: 32 },
-						},
-						"(min-width: 1024px)": {
-							slides: { perView: 3, spacing: 32 },
-						},
-						"(min-width: 1280px)": {
-							slides: { perView: 3, spacing: 32 },
-						},
-						"(min-width: 1536px)": {
-							slides: { perView: 4, spacing: 32 },
-						},
-					},
-				},
-				[
-					(slider) => {
-						let timeout;
-						let mouseOver = false;
-						function clearNextTimeout() {
-							clearTimeout(timeout);
-						}
-						function nextTimeout() {
-							clearTimeout(timeout);
-							if (mouseOver) return;
-							timeout = setTimeout(() => {
-								slider.next();
-							}, 2000);
-						}
-						slider.on("created", () => {
-							slider.container.addEventListener("mouseover", () => {
-								mouseOver = true;
-								clearNextTimeout();
-							});
-							slider.container.addEventListener("mouseout", () => {
-								mouseOver = false;
+					[
+						(slider) => {
+							let timeout;
+							let mouseOver = false;
+							function clearNextTimeout() {
+								clearTimeout(timeout);
+							}
+							function nextTimeout() {
+								clearTimeout(timeout);
+								if (mouseOver) return;
+								timeout = setTimeout(() => {
+									slider.next();
+								}, 2000);
+							}
+							slider.on("created", () => {
+								slider.container.addEventListener("mouseover", () => {
+									mouseOver = true;
+									clearNextTimeout();
+								});
+								slider.container.addEventListener("mouseout", () => {
+									mouseOver = false;
+									nextTimeout();
+								});
 								nextTimeout();
 							});
-							nextTimeout();
-						});
-						slider.on("dragStarted", clearNextTimeout);
-						slider.on("animationEnded", nextTimeout);
-						slider.on("updated", nextTimeout);
-					},
-				],
-			);
+							slider.on("dragStarted", clearNextTimeout);
+							slider.on("animationEnded", nextTimeout);
+							slider.on("updated", nextTimeout);
+						},
+					],
+				);
 
-			//- const $PageHomeHeroSliderPrevButton = document.getElementById("PageHomeHeroSliderPrevButton");
-			//- const $PageHomeHeroSliderNextButton = document.getElementById("PageHomeHeroSliderNextButton");
+				//- const $PageHomeHeroSliderPrevButton = document.getElementById("PageHomeHeroSliderPrevButton");
+				//- const $PageHomeHeroSliderNextButton = document.getElementById("PageHomeHeroSliderNextButton");
 
-			//- $PageHomeHeroSliderPrevButton.addEventListener("click", () => PageHomeHeroSlider.prev());
-			//- $PageHomeHeroSliderNextButton.addEventListener("click", () => PageHomeHeroSlider.next());
-		});
+				//- $PageHomeHeroSliderPrevButton.addEventListener("click", () => PageHomeHeroSlider.prev());
+				//- $PageHomeHeroSliderNextButton.addEventListener("click", () => PageHomeHeroSlider.next());
+			});
 
 
 block body
@@ -207,11 +208,11 @@ block body
 	section(class="relative pb-40 -mt-40 before:content-[''] before:block before:bg-[url('/img/row-bg-011.jpg')] before:absolute before:top-0 before:left-0 before:w-full before:max-w-[1742px] before:rounded-r-md before:h-full")
 		div(class="py-24")
 			div(class="container")
-				div(class="grid grid-cols-1 items-center gap-8 px-4 relative sm:px-0 md:grid-cols-2")
+				div(class="grid grid-cols-1 gap-8 px-4 relative sm:px-0 md:grid-cols-2")
 					div(class="flex flex-col gap-2")
-						h4(class="font-semibold text-cetek-600") Diğer Kategorilere Göz At
-						h3(class="text-4xl") Benzer Kategoriler
-					p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+						h4(class="font-semibold text-cetek-600")= t("pageProductDetail.relatedProductCategories.subtitle")
+						h3(class="text-4xl")= t("pageProductDetail.relatedProductCategories.title")
+					p= t("pageProductDetail.relatedProductCategories.description")
 
 	section(class="relative -mt-40 mb-24")
 		div(class="container")
@@ -220,6 +221,11 @@ block body
 					div(class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4")
 						each item in productCategories
 							+ProductCategoryCard(item)
+					div(class="flex flex-col items-center justify-center gap-2 mt-8 xs:flex-row")
+						a(
+							href=t("pageHome.sectionAbout.buttonProducts.href"),
+							class="inline-flex items-center justify-center bg-cetek-600 text-white h-12 px-8 rounded font-medium border border-solid border-transparent transition leading-none shadow-lg hover:shadow-2xl hover:hover:-translate-y-1 hover:bg-cetek-700 active:ring-1 active:ring-cetek-800 active:ring-offset-2 active:bg-cetek-800"
+						)= t("pageHome.sectionAbout.buttonProducts.label")
 				else
 					div(class="bg-white border border-neutral-200 shadow rounded-lg px-4 py-8 xs:px-8")
 						div(class="flex flex-col items-center gap-5 text-center")

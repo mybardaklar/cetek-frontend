@@ -1,0 +1,73 @@
+include ../../../components/ProductCategoryCard.component.pug
+
+mixin SectionProductCategories
+	section
+		div(class="relative")
+			img(
+				src="/img/b4e32e870ea9ebcca480e84ee4d2b241a922d4e6-750x501.png",
+				alt="",
+				class="absolute top-0 left-0 w-full h-full object-cover"
+			)
+			div(class="relative bg-neutral-800 bg-opacity-40 pb-40")
+				div(class="py-24")
+					div(class="px-2 sm:px-0")
+						div(class="container")
+							div(class="flex flex-col items-center justify-center text-center gap-4 max-w-screen-sm mx-auto")
+								h1(class="text-white text-3xl font-bold text-center [&_strong]:text-cetek-600")!= t("pageHome.sectionProductCategories.hero.title")
+
+		div(class="flex flex-col")
+			div(class="relative pb-40 -mt-40 before:content-[''] before:block before:bg-[url('/img/row-bg-011.jpg')] before:absolute before:top-0 before:left-0 before:w-full before:max-w-[1742px] before:rounded-r-md before:h-full")
+				div(class="py-24")
+					div(class="container")
+						div(class="grid grid-cols-1 gap-8 px-4 relative sm:px-0 md:grid-cols-2")
+							div(class="flex flex-col gap-2")
+								h3(class="font-semibold text-cetek-600")!= t("pageHome.sectionProductCategories.subtitle")
+								h2(class="text-4xl")!= t("pageHome.sectionProductCategories.title")
+							p!= t("pageHome.sectionProductCategories.description")
+
+			div(class="relative -mt-40 mb-24")
+				div(class="container")
+					div(class="px-2 sm:px-0")
+						if homeProductCategories.length
+							div(class="relative")
+								div(class="-my-8 mx-1")
+									div(
+										id="PageHomeProductCategoriesSlider",
+										class="keen-slider"
+									)
+										each item in homeProductCategories
+											div(class="keen-slider__slide px-4 py-8 flex flex-col")
+												+ProductCategoryCard(item)
+									button(
+										aria-label="Previous slide",
+										id="PageHomeProductCategoriesSliderPrevButton",
+										class="absolute top-1/2 left-0 -translate-y-1/2 rounded-md shadow-lg bg-white ring-2 ring-slate-600 p-2 text-slate-600 transition hover:bg-slate-600 hover:ring-offset-2 hover:text-white active:bg-slate-800 active:ring-slate-800 active:ring-offset-2 active:text-white"
+									)
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m7.85 13l2.85 2.85q.3.3.288.7t-.288.7q-.3.3-.712.313t-.713-.288L4.7 12.7q-.3-.3-.3-.7t.3-.7l4.575-4.575q.3-.3.713-.287t.712.312q.275.3.288.7t-.288.7L7.85 11H19q.425 0 .713.288T20 12t-.288.713T19 13z"/></svg>
+									button(
+										aria-label="Next slide",
+										id="PageHomeProductCategoriesSliderNextButton",
+										class="absolute top-1/2 right-0 -translate-y-1/2 rounded-md shadow-lg bg-white ring-2 ring-slate-600 p-2 text-slate-600 transition hover:bg-slate-600 hover:ring-offset-2 hover:text-white active:bg-slate-800 active:ring-slate-800 active:ring-offset-2 active:text-white"
+									)
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16.15 13H5q-.425 0-.712-.288T4 12t.288-.712T5 11h11.15L13.3 8.15q-.3-.3-.288-.7t.288-.7q.3-.3.713-.312t.712.287L19.3 11.3q.15.15.213.325t.062.375t-.062.375t-.213.325l-4.575 4.575q-.3.3-.712.288t-.713-.313q-.275-.3-.288-.7t.288-.7z"/></svg>
+
+							div(class="flex flex-col items-center justify-center gap-2 mt-8 xs:flex-row")
+								a(
+									href=t("pageHome.sectionAbout.buttonProducts.href"),
+									class="inline-flex items-center justify-center bg-cetek-600 text-white h-12 px-8 rounded font-medium border border-solid border-transparent transition leading-none shadow-lg hover:shadow-2xl hover:hover:-translate-y-1 hover:bg-cetek-700 active:ring-1 active:ring-cetek-800 active:ring-offset-2 active:bg-cetek-800"
+								)= t("pageHome.sectionAbout.buttonProducts.label")
+						else
+							div(class="bg-white border border-neutral-200 shadow rounded-lg px-4 py-8 xs:px-8")
+								div(class="flex flex-col items-center gap-5 text-center")
+									img(
+										src=siteSettings.website_settings.header_logo.sizes['medium'],
+										alt=siteSettings.website_settings.header_logo.alt,
+										class="w-60"
+									)
+									div(class="max-w-screen-lg")
+										p(class="text-neutral-600 text-sm")= t('noProducts')
+									div(class="flex flex-col gap-2 xs:flex-row")
+										a(
+											href=t("pageHome.sectionAbout.buttonContact.href"),
+											class="inline-flex items-center justify-center bg-cetek-600 text-white h-12 px-8 rounded font-medium border border-solid border-transparent transition leading-none shadow-lg hover:shadow-2xl hover:hover:-translate-y-1 hover:bg-cetek-700 active:ring-1 active:ring-cetek-800 active:ring-offset-2 active:bg-cetek-800"
+										)= t("pageHome.sectionAbout.buttonContact.label")

@@ -70,10 +70,6 @@
 	},
 
 	"pageHome": {
-		"title": "Book shop",
-		"total": "There are {{counter}} books in the list",
-		"buttonText": "Refresh button",
-		"buttonHTML": "<button onClick='window.location.reload();'>$t(buttonText)</button>",
 		"sectionAbout": {
 			"buttonProducts": {
 				"href": "/products",
@@ -83,6 +79,14 @@
 				"href": "/contact",
 				"label": "Contact with us"
 			}
+		},
+		"sectionProductCategories": {
+			"hero": {
+				"title": "We Provide the <strong>Best Production</strong> in Every Aspect"
+			},
+			"subtitle": "Nozzle &amp; Spare Part",
+			"title": "We Provide the <strong>Best Production</strong> in Every Aspect",
+			"description": "Our company was established in İzmir, and production is carried out in factories both abroad and in Turkey. We supply many parts such as nozzles, air reeds, eductors, spare parts, and quick couplings."
 		}
 	},
 
@@ -91,6 +95,14 @@
 			"subtitle": "Nozzle &amp; Spare Part",
 			"title": "We Provide the <strong>Best Production</strong> in Every Aspect",
 			"description": "Our company was established in İzmir, and production is carried out in factories both abroad and in Turkey. We supply many parts such as nozzles, air reeds, eductors, spare parts, and quick couplings."
+		}
+	},
+
+	"pageProductDetail": {
+		"relatedProductCategories": {
+			"subtitle": "Browse Other Categories",
+			"title": "Related Categories",
+			"description": "In this section, you can easily access similar categories related to the content you are currently browsing. The relevant categories offer options similar to the products you are looking for or the topics you are exploring, allowing you to discover more. By exploring different product groups and content, you can find the information and products you are looking for more quickly."
 		}
 	},
 
