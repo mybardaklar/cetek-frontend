@@ -1,11 +1,16 @@
-mixin Breadcrumbs(list)
-	div(class="inline-flex items-center gap-2 text-white")
+mixin Breadcrumbs(list, light = true)
+	div(
+		class="inline-flex flex-wrap items-center gap-2"
+		class={ "text-white": light  }
+	)
 		each item, index in list
 			a(
 				href=item.href,
-				class="text-white font-medium transition",
+				class="font-medium transition",
 				class={
-					"text-opacity-60 hover:text-opacity-80": (index + 1) !== list.length
+					"text-opacity-60 hover:text-opacity-80": (index + 1) !== list.length,
+					"text-neutral-600": !light,
+					"text-white": light
 				}
 			)= item.label
 			if (index + 1) < list.length

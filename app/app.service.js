@@ -95,6 +95,30 @@ class AppService {
 		}
 	}
 
+	async getProductBySlug(lang, slug) {
+		try {
+			const request = await axiosInstance.get(
+				`/product?_fields=id,status,slug,title,product_category,acf,lang,translations&acf_format=standard&lang=${lang}&slug=${slug}`,
+			);
+
+			return request.data[0];
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
+	async getProductByID(lang, id) {
+		try {
+			const request = await axiosInstance.get(
+				`/product/${id}?_fields=id,status,slug,title,product_category,acf,lang,translations&acf_format=standard`,
+			);
+
+			return request.data;
+		} catch (error) {
+			console.error(error);
+		}
+	}
+
 	async getGalleryPageSettings(lang) {
 		try {
 			console.log("service:getGalleryPageSettings");

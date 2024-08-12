@@ -10,12 +10,6 @@ block prepend head
 	- PageProps.metaDescription = pageSettings.meta_description
 	- PageProps.metaKeywords = pageSettings.meta_keywords
 
-block body
-	+SectionHero
-	+SectionServices
-	+SectionAbout
-	+SectionSectoralNozzles
-
 block append scripts
 	script.
 		document.addEventListener("DOMContentLoaded", () => {
@@ -125,3 +119,9 @@ block append scripts
 			//- $PageHomeHeroSliderPrevButton.addEventListener("click", () => PageHomeHeroSlider.prev());
 			//- $PageHomeHeroSliderNextButton.addEventListener("click", () => PageHomeHeroSlider.next());
 		});
+
+block body
+	+SectionHero
+	+SectionServices
+	+SectionAbout
+	+SectionSectoralNozzles

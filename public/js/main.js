@@ -63,10 +63,4 @@ document.addEventListener("DOMContentLoaded", () => {
 			},
 		],
 	);
-
-	/* const $PageHomeHeroSliderPrevButton = document.getElementById("PageHomeHeroSliderPrevButton");
-	const $PageHomeHeroSliderNextButton = document.getElementById("PageHomeHeroSliderNextButton");
-
-	$PageHomeHeroSliderPrevButton.addEventListener("click", () => PageHomeHeroSlider.prev());
-	$PageHomeHeroSliderNextButton.addEventListener("click", () => PageHomeHeroSlider.next()); */
 });

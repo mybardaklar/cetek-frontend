@@ -1,26 +1,26 @@
 extends ../../layouts/Default.layout.pug
 
 include ../../components/Breadcrumbs.component.pug
-include ../../components/ProductCard.component.pug
+include ../../components/ProductCategoryCard.component.pug
 
 block prepend head
-	- PageProps.title = currentCategory.name
-	- PageProps.metaDescription = currentCategory.acf.meta_description
-	- PageProps.metaKeywords = currentCategory.acf.meta_keywords
+	- PageProps.title = pageSettings.meta_title
+	- PageProps.metaDescription = pageSettings.meta_description
+	- PageProps.metaKeywords = pageSettings.meta_keywords
 
 block body
 	section(class="relative")
 		img(
 			src=pageSettings.background_image.url,
 			srcset=`${pageSettings.background_image.sizes["2048x2048"]} ${pageSettings.background_image.sizes["2048x2048-width"]}w, ${pageSettings.background_image.sizes["1536x1536"]} ${pageSettings.background_image.sizes["1536x1536-width"]}w, ${pageSettings.background_image.sizes["large"]} ${pageSettings.background_image.sizes["large-width"]}w, ${pageSettings.background_image.sizes["medium_large"]} ${pageSettings.background_image.sizes["medium_large-width"]}w, ${pageSettings.background_image.sizes["medium"]} ${pageSettings.background_image.sizes["medium-width"]}w`
-			alt=currentCategory.name,
+			alt=pageSettings.meta_title,
 			class="absolute top-0 left-0 w-full h-full object-cover"
 		)
 		div(class="relative bg-neutral-800 bg-opacity-40 pt-28 pb-40")
 			div(class="py-24")
 				div(class="container")
 					div(class="flex flex-col items-center justify-center text-center gap-4 max-w-screen-sm mx-auto")
-						h1(class="text-white text-5xl font-bold text-center")= currentCategory.name
+						h1(class="text-white text-5xl font-bold text-center")= pageSettings.page_title
 						+Breadcrumbs([
 							{
 								href: t('pages.home.href'),
@@ -30,22 +30,24 @@ block body
 								href: t('pages.products.href'),
 								label: t('pages.products.label'),
 							},
-							{
-								href: `/${currentCategory.slug}${t('slugPrefixes.products')}`,
-								label: currentCategory.name,
-							},
 						])
+
+	section(class="relative pb-40 -mt-40 before:content-[''] before:block before:bg-[url('/img/row-bg-011.jpg')] before:absolute before:top-0 before:left-0 before:w-full before:max-w-[1742px] before:rounded-r-md before:h-full")
+		div(class="py-24")
+			div(class="container")
+				div(class="grid grid-cols-1 items-center gap-8 px-4 relative sm:px-0 md:grid-cols-2")
+					div(class="flex flex-col gap-2")
+						h3(class="font-semibold text-cetek-600")!= t('pageProductCategories.hero.subtitle')
+						h2(class="text-4xl")!= t('pageProductCategories.hero.title')
+					p!= t('pageProductCategories.hero.description')
 
 	section(class="relative -mt-40 mb-24")
 		div(class="container")
 			div(class="px-2 sm:px-0")
-				if products.length
-					div(
-						class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-					)
-						each item in products
-							div(class="flex flex-col")
-								+ProductCard(item)
+				if productCategories.length
+					div(class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4")
+						each item in productCategories
+							+ProductCategoryCard(item)
 				else
 					div(class="bg-white border border-neutral-200 shadow rounded-lg px-4 py-8 xs:px-8")
 						div(class="flex flex-col items-center gap-5 text-center")
@@ -58,10 +60,6 @@ block body
 								p(class="text-neutral-600 text-sm")= t('noProducts')
 							div(class="flex flex-col gap-2 xs:flex-row")
 								a(
-									href=t("pageHome.sectionAbout.buttonProducts.href"),
-									class="inline-flex items-center justify-center bg-cetek-600 text-white h-12 px-8 rounded font-medium border border-solid border-transparent transition leading-none shadow-lg hover:shadow-2xl hover:hover:-translate-y-1 hover:bg-cetek-700 active:ring-1 active:ring-cetek-800 active:ring-offset-2 active:bg-cetek-800"
-								)= t("pageHome.sectionAbout.buttonProducts.label")
-								a(
 									href=t("pageHome.sectionAbout.buttonContact.href"),
-									class="inline-flex items-center justify-center bg-slate-600 text-white h-12 px-8 rounded font-medium border border-solid border-transparent transition leading-none shadow-lg hover:shadow-2xl hover:-translate-y-1 hover:bg-slate-700 active:ring-1 active:ring-slate-800 active:ring-offset-2 active:bg-slate-800"
+									class="inline-flex items-center justify-center bg-cetek-600 text-white h-12 px-8 rounded font-medium border border-solid border-transparent transition leading-none shadow-lg hover:shadow-2xl hover:hover:-translate-y-1 hover:bg-cetek-700 active:ring-1 active:ring-cetek-800 active:ring-offset-2 active:bg-cetek-800"
 								)= t("pageHome.sectionAbout.buttonContact.label")

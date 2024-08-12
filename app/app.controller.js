@@ -118,7 +118,6 @@ class AppController {
 				pageSettings,
 				sectoralNozzles,
 			});
-			// return res.render("index.pug", { pageSettings });
 		} catch (error) {
 			console.log(error);
 		}
@@ -260,14 +259,14 @@ class AppController {
 		if (req.params.link === "urunler") {
 			if (res.locals.language !== "tr") return res.redirect("/products");
 
-			return res.render("pages/ProductCategory/ProductCategory.page.pug", {
+			return res.render("pages/Products/Products.page.pug", {
 				pageSettings,
 				productCategories: productCategories[res.locals.language],
 			});
 		} else if (req.params.link === "products") {
 			if (res.locals.language !== "en") return res.redirect("/urunler");
 
-			return res.render("pages/ProductCategory/ProductCategory.page.pug", {
+			return res.render("pages/Products/Products.page.pug", {
 				pageSettings,
 				productCategories: productCategories[res.locals.language],
 			});
@@ -301,7 +300,7 @@ class AppController {
 					currentCategory.id,
 				);
 
-				return res.render("pages/ProductDetail/ProductDetail.page.pug", {
+				return res.render("pages/ProductCategory/ProductCategory.page.pug", {
 					pageSettings,
 					currentCategory,
 					products,
@@ -339,7 +338,7 @@ class AppController {
 					currentCategory.id,
 				);
 
-				return res.render("pages/ProductDetail/ProductDetail.page.pug", {
+				return res.render("pages/ProductCategory/ProductCategory.page.pug", {
 					pageSettings,
 					currentCategory,
 					products,
@@ -347,6 +346,55 @@ class AppController {
 			}
 
 			return res.status(404).render("pages/Error/Error.page.pug");
+		} else {
+			if (req.query.lng) {
+				const product = await appService.getProductBySlug(
+					res.locals.language === "en" ? "tr" : "en",
+					req.params.link,
+				);
+
+				console.log(product);
+
+				if (product) {
+					const translatedProduct = await appService.getProductByID(
+						req.query.lng,
+						product.translations[req.query.lng],
+					);
+
+					console.log(product.translations[req.query.lng]);
+
+					if (translatedProduct) {
+						return res.redirect(`/${translatedProduct.slug}`);
+					}
+
+					return res.status(404).render("pages/Error/Error.page.pug");
+				}
+
+				return res.status(404).render("pages/Error/Error.page.pug");
+			} else {
+				const product = await appService.getProductBySlug(
+					res.locals.language,
+					req.params.link,
+				);
+
+				if (product) {
+					const currentCategory = productCategories[res.locals.language].filter(
+						(item) => item.id === product.product_category[0],
+					)[0];
+
+					if (currentCategory) {
+						return res.render("pages/ProductDetail/ProductDetail.page.pug", {
+							product,
+							category: currentCategory,
+							productCategories: productCategories[res.locals.language].slice(0, 4),
+						});
+					}
+
+					return res.status(404).render("pages/Error/Error.page.pug");
+				}
+
+				return res.status(404).render("pages/Error/Error.page.pug");
+			}
 		}
 
 		return res.status(404).render("pages/Error/Error.page.pug");
