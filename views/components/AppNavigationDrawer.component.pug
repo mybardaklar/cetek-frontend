@@ -80,6 +80,7 @@ mixin AppNavigationDrawer
 							li(class="border border-transparent")
 								a(
 									href=t("navbar.sectoralNozzles.href"),
+									x-on:click.prevent="$store.navigationDrawer.goToSectoralNozzles();",
 									class="flex h-10 items-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
 								)= t("navbar.sectoralNozzles.label")
 							li(class="border border-transparent")

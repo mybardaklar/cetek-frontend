@@ -6,8 +6,8 @@ include ../../components/ProductCategoryCard.component.pug
 
 block prepend head
 	- PageProps.title = product.title.rendered
-	- PageProps.metaDescription = "currentCategory.acf.meta_description"
-	- PageProps.metaKeywords = "currentCategory.acf.meta_keywords"
+	- PageProps.metaDescription = category.acf.meta_description ? category.acf.meta_description : ""
+	- PageProps.metaKeywords = category.acf.meta_keywords  ? category.acf.meta_keywords : ""
 
 block append scripts
 	script(src="https://cdnjs.cloudflare.com/ajax/libs/fslightbox/3.0.9/index.min.js")
@@ -22,20 +22,19 @@ block append scripts
 						loop: true,
 						slides: {
 							perView: 1,
-							spacing: 8
 						},
 						breakpoints: {
 							"(min-width: 640px)": {
-								slides: { perView: 2, spacing: 32 },
+								slides: { perView: 2},
 							},
 							"(min-width: 1024px)": {
-								slides: { perView: 3, spacing: 32 },
+								slides: { perView: 3},
 							},
 							"(min-width: 1280px)": {
-								slides: { perView: 3, spacing: 32 },
+								slides: { perView: 3 },
 							},
 							"(min-width: 1536px)": {
-								slides: { perView: 4, spacing: 32 },
+								slides: { perView: 4 },
 							},
 						},
 					},
@@ -83,14 +82,14 @@ block body
 	section(class="relative min-h-screen pb-40 flex flex-col bg-gradient-to-b from-20% to-20% from-cetek-600 to-white lg:bg-gradient-to-r lg:from-50% lg:to-50%")
 		div(class="flex-grow flex flex-col mt-28 pb-8 sm:pt-8")
 			div(class="flex-grow flex flex-col container")
-				div(class="flex-grow grid grid-cols-1 gap-8 sm:gap-16 lg:grid-cols-2")
+				div(class="flex-grow grid grid-cols-1 sm:gap-16 lg:grid-cols-2")
 					div(class="lg:hidden")
-						div(class="px-2 sm:px-0")
-							div(class="sticky top-36")
-								if product.acf.product_images.length
-									div(id="ProductImagesSlider", class="keen-slider")
-										each image in product.acf.product_images
-											div(class="keen-slider__slide")
+						div(class="sticky top-36 sm:-mx-4")
+							if product.acf.product_images.length
+								div(id="ProductImagesSlider", class="keen-slider")
+									each image in product.acf.product_images
+										div(class="keen-slider__slide")
+											div(class="px-2 pb-12 sm:px-4")
 												a(
 													href=image.url,
 													class="block relative h-96 overflow-hidden rounded-md shadow-xl border-2 border-neutral-50 group/preview",
@@ -103,7 +102,8 @@ block body
 													)
 													div(class="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-neutral-600 bg-opacity-80 text-white transition invisible opacity-0 group-hover/preview:visible group-hover/preview:opacity-100")
 														<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 256 256"><g fill="currentColor"><path d="M128 56c-80 0-112 72-112 72s32 72 112 72s112-72 112-72s-32-72-112-72m0 112a40 40 0 1 1 40-40a40 40 0 0 1-40 40" opacity=".2"/><path d="M247.31 124.76c-.35-.79-8.82-19.58-27.65-38.41C194.57 61.26 162.88 48 128 48S61.43 61.26 36.34 86.35C17.51 105.18 9 124 8.69 124.76a8 8 0 0 0 0 6.5c.35.79 8.82 19.57 27.65 38.4C61.43 194.74 93.12 208 128 208s66.57-13.26 91.66-38.34c18.83-18.83 27.3-37.61 27.65-38.4a8 8 0 0 0 0-6.5M128 192c-30.78 0-57.67-11.19-79.93-33.25A133.5 133.5 0 0 1 25 128a133.3 133.3 0 0 1 23.07-30.75C70.33 75.19 97.22 64 128 64s57.67 11.19 79.93 33.25A133.5 133.5 0 0 1 231.05 128c-7.21 13.46-38.62 64-103.05 64m0-112a48 48 0 1 0 48 48a48.05 48.05 0 0 0-48-48m0 80a32 32 0 1 1 32-32a32 32 0 0 1-32 32"/></g></svg>
-								else
+							else
+								div(class="px-2 sm:px-0")
 									a(
 										href="/img/ce.png",
 										class="block relative h-96 overflow-hidden rounded-md shadow-xl border-2 border-neutral-50 group/preview",
@@ -180,7 +180,7 @@ block body
 									if product.acf.description
 										p!= product.acf.description
 									else
-										p Bu ürün için açıklama girilmemiş.
+										p= t("pageProductDetail.noDescription")
 
 								hr
 
@@ -188,11 +188,12 @@ block body
 									if product.acf.features.length
 										ul(class="flex flex-col gap-2")
 											each item in product.acf.features
-												li(class="flex gap-2")
-													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="text-cetek-600 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 384 384"><path d="M275.312 140.688c-6.24-6.248-16.384-6.248-22.624 0L184 209.368l-28.688-28.68c-6.24-6.248-16.384-6.248-22.624 0-6.248 6.248-6.248 16.376 0 22.624l40 40C175.808 246.44 179.904 248 184 248s8.192-1.56 11.312-4.688l80-80c6.248-6.248 6.248-16.376 0-22.624z"></path><path d="M368 176c-8.832 0-16 7.168-16 16 0 88.224-71.776 160-160 160S32 280.224 32 192 103.776 32 192 32c42.952 0 83.272 16.784 113.544 47.264 6.216 6.28 16.352 6.312 22.624.08 6.272-6.224 6.304-16.352.08-22.624C291.928 20.144 243.536 0 192 0 86.128 0 0 86.128 0 192s86.128 192 192 192 192-86.128 192-192c0-8.832-7.168-16-16-16z"></path></svg>
-													span= item.feature
+												if item.feature
+													li(class="flex gap-2")
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="text-cetek-600 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 384 384"><path d="M275.312 140.688c-6.24-6.248-16.384-6.248-22.624 0L184 209.368l-28.688-28.68c-6.24-6.248-16.384-6.248-22.624 0-6.248 6.248-6.248 16.376 0 22.624l40 40C175.808 246.44 179.904 248 184 248s8.192-1.56 11.312-4.688l80-80c6.248-6.248 6.248-16.376 0-22.624z"></path><path d="M368 176c-8.832 0-16 7.168-16 16 0 88.224-71.776 160-160 160S32 280.224 32 192 103.776 32 192 32c42.952 0 83.272 16.784 113.544 47.264 6.216 6.28 16.352 6.312 22.624.08 6.272-6.224 6.304-16.352.08-22.624C291.928 20.144 243.536 0 192 0 86.128 0 0 86.128 0 192s86.128 192 192 192 192-86.128 192-192c0-8.832-7.168-16-16-16z"></path></svg>
+														span= item.feature
 									else
-										p Bu ürün için hiçbir ürün özelliği girilmemiş.
+										p= t("pageProductDetail.noFeature")
 
 								div
 									div(class="flex flex-col gap-2 mt-4 xs:flex-row")

@@ -5,6 +5,15 @@ document.addEventListener("alpine:init", () => {
 		toggle() {
 			this.on = !this.on;
 		},
+
+		goToSectoralNozzles() {
+			if (window.location.pathname !== "/") {
+				window.location.replace("/#PageHomeSectionSectoralNozzles");
+			} else {
+				this.toggle();
+				document.getElementById("PageHomeSectionSectoralNozzles").scrollIntoView();
+			}
+		},
 	});
 });
 

@@ -99,6 +99,8 @@
 	},
 
 	"pageProductDetail": {
+		"noDescription": "No description has been entered for this product.",
+		"noFeature": "No product features have been entered for this product.",
 		"relatedProductCategories": {
 			"subtitle": "Browse Other Categories",
 			"title": "Related Categories",

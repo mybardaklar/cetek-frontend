@@ -35,6 +35,54 @@ block body
 
 	+SectionForm
 
+	section(class="my-24")
+		div(class="container")
+			div(class="px-2 sm:px-0")
+				div(class="grid grid-cols-1 gap-x-4 gap-y-16 lg:grid-cols-2")
+					each item in contactInformations
+						div(class="flex flex-col gap-8")
+							div(class="flex items-center gap-8 overflow-hidden")
+								h3(class="text-3xl font-medium flex-shrink-0")= item.title.rendered
+								div(class="w-full h-px bg-neutral-200 flex-shrink-0")
+
+							div(class="flex gap-4")
+								div(class="w-16 h-16 inline-flex items-center justify-center text-center bg-neutral-100 border border-neutral-200 text-cetek-600 rounded-md flex-shrink-0")
+									<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="currentColor" fill-opacity="0"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 20.5C12 20.5 6 13.5 6 9C6 5.68629 8.68629 3 12 3C15.3137 3 18 5.68629 18 9C18 13.5 12 20.5 12 20.5z"><animate fill="freeze" attributeName="d" dur="0.4s" keyTimes="0;0.7;1" values="M12 20.5C12 20.5 11 19 11 18C11 17.5 11.5 17 12 17C12.5 17 13 17.5 13 18C13 19 12 20.5 12 20.5z;M12 20.5C12 20.5 5 13 5 8C5 4.5 8 1 12 1C16 1 19 4.5 19 8C19 13 12 20.5 12 20.5z;M12 20.5C12 20.5 6 13.5 6 9C6 5.68629 8.68629 3 12 3C15.3137 3 18 5.68629 18 9C18 13.5 12 20.5 12 20.5z"/><animate fill="freeze" attributeName="fill-opacity" begin="0.5s" dur="0.15s" values="0;0.3"/></path><circle cx="12" cy="9" r="2.5"><animate fill="freeze" attributeName="fill-opacity" begin="0.5s" dur="0.4s" values="0;1"/></circle></g></svg>
+								div(class="flex flex-col")
+									strong(class="text-xl font-semibold")= language === "tr" ? "Adres" : "Address"
+									p= item.acf.address
+
+							div(class="grid grid-cols-1 gap-4 sm:grid-cols-2")
+								each member in item.acf.team
+									div(class="bg-white p-4 border border-neutral-200 rounded-md")
+										div(class="flex flex-col gap-8")
+											if member.photo
+												div(class="w-20 h-20 inline-flex items-center justify-center text-center rounded-md border border-neutral-200 overflow-hidden")
+													img(
+														src=member.photo.sizes["medium"],
+														alt="alt",
+														class="w-20 h-20 object-cover"
+													)
+											else
+												div(class="w-20 h-20 inline-flex items-center justify-center text-center rounded-md border border-neutral-200 text-cetek-600")
+													<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24"><path fill="currentColor" fill-opacity=".25" d="M3 12a9 9 0 1 1 18 0a9 9 0 0 1-18 0"/><circle cx="12" cy="10" r="4" fill="currentColor"/><path fill="currentColor" fill-rule="evenodd" d="M18.22 18.246c.06.097.041.22-.04.297A8.969 8.969 0 0 1 12 21a8.969 8.969 0 0 1-6.18-2.457a.239.239 0 0 1-.04-.297C6.942 16.318 9.291 15 12 15c2.708 0 5.057 1.318 6.22 3.246" clip-rule="evenodd"/></svg>
+
+											div(class="flex flex-col gap-3")
+												div(class="flex flex-col")
+													strong(class="block font-semibold")= member.fullname
+													i(class="block not-italic")= member.role
+												div(class="flex flex-col gap-2 text-sm")
+													a(
+														href=`mailto:${member.email}`,
+														class="underline decoration-1 underline-offset-4 font-medium transition-all hover:underline-offset-8"
+													)= member.email
+													a(
+														href=`tel:${member.phone_number}`,
+														class="underline decoration-1 underline-offset-4 font-medium transition-all hover:underline-offset-8"
+													)= member.phone_number
+
+
+
 	section
 		iframe(
 			src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6093.914399657271!2d28.950322!3d40.210015!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14ca1152f389840f%3A0xcf2168fd634dc1f5!2zw5zDp2V2bGVyLCBUYW5heSBDZC4gTm86MjUsIDE2MTIwIE5pzIdsw7xmZXIvQnVyc2EsIFTDvHJraXll!5e0!3m2!1str!2sus!4v1722979348437!5m2!1str!2sus"

@@ -106,6 +106,8 @@
 	},
 
 	"pageProductDetail": {
+		"noDescription": "Bu ürün için açıklama girilmemiş.",
+		"noFeature": "Bu ürün için hiçbir ürün özelliği girilmemiş.",
 		"relatedProductCategories": {
 			"subtitle": "Diğer Kategorilere Göz At",
 			"title": "Benzer Kategoriler",

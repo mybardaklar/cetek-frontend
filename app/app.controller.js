@@ -61,6 +61,15 @@ class AppController {
 			};
 			await kv.set("contactPageSettings", JSON.stringify(contactPSettings));
 
+			// set contact informations to Vercel KV
+			const enContactInformations = await appService.getContactInformations("en");
+			const trContactInformations = await appService.getContactInformations("tr");
+			const contactInformations = {
+				en: enContactInformations,
+				tr: trContactInformations,
+			};
+			await kv.set("contactInformations", JSON.stringify(contactInformations));
+
 			// set gallery page settings to Vercel KV
 			const enGalleryPageSettings = await appService.getGalleryPageSettings("en");
 			const trGalleryPageSettings = await appService.getGalleryPageSettings("tr");
@@ -177,6 +186,23 @@ class AppController {
 				pageSettings = await pageSettings[res.locals.language];
 			}
 
+			let contactInformations = null;
+			const cachedContactInformations = await kv.get("contactInformations");
+			if (cachedContactInformations) {
+				contactInformations = cachedContactInformations[res.locals.language];
+			} else {
+				const enContactInformations = await appService.getContactInformations("en");
+				const trContactInformations = await appService.getContactInformations("tr");
+
+				contactInformations = {
+					en: enContactInformations,
+					tr: trContactInformations,
+				};
+
+				await kv.set("contactInformations", JSON.stringify(contactInformations));
+				contactInformations = await contactInformations[res.locals.language];
+			}
+
 			req.i18n.t("pageContact.sectionForm.description", {
 				hrefFacebook: req.app.locals.siteSettings.website_settings.social_media["facebook"],
 				hrefTwitter: req.app.locals.siteSettings.website_settings.social_media["twitter"],
@@ -186,6 +212,7 @@ class AppController {
 
 			return res.render("pages/Contact/Contact.page.pug", {
 				pageSettings,
+				contactInformations,
 			});
 		} catch (error) {
 			console.error(error);

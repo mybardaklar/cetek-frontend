@@ -27,7 +27,8 @@ html(lang=language, dir="ltr")
 	body(
 		x-cloak,
 		x-data,
-		x-bind:class="{ 'overflow-hidden': $store.navigationDrawer.on }"
+		x-bind:class="{ 'overflow-hidden': $store.navigationDrawer.on }",
+		class="selection:bg-cetek-200"
 	)
 		#app
 			block fixed

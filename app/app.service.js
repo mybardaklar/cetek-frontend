@@ -161,6 +161,20 @@ class AppService {
 			console.log(error);
 		}
 	}
+
+	async getContactInformations(lang) {
+		try {
+			console.log("service:getContactInformation");
+
+			const request = await axiosInstance.get(
+				`/contact?_fields=id,status,slug,title,acf,lang,translations&acf_format=standard&per_page=100&lang=${lang}`,
+			);
+
+			return request.data;
+		} catch (error) {
+			console.error(error);
+		}
+	}
 }
 
 module.exports = AppService;
