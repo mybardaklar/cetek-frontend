@@ -11,6 +11,7 @@ html(lang=language, dir="ltr")
 			meta(name="viewport", content="width=device-width, initial-scale=1.0")
 			block meta
 			title= `${PageProps.title} · ${PageProps.titlePrefix}` || siteSettings.meta_title
+			meta(name="robots", content="index,follow")
 			meta(name="description", content= PageProps.metaDescription || siteSettings.meta_description)
 			meta(name="keywords", content= PageProps.metaKeywords || siteSettings.meta_keywords)
 			meta(name="author", content="Ce-tek Spray Nozzle")
@@ -23,6 +24,13 @@ html(lang=language, dir="ltr")
 				link(rel="stylesheet", href='/css/tailwind.css')
 			link(rel="icon", type="image/png", sizes="192x192", href="/img/favicon.png")
 			script(src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js", defer)
+			<!-- Google Tag Manager -->
+			<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+			})(window,document,'script','dataLayer','GTM-TPVDJL4T');</script>
+			<!-- End Google Tag Manager -->
 
 	body(
 		x-cloak,
@@ -30,6 +38,11 @@ html(lang=language, dir="ltr")
 		x-bind:class="{ 'overflow-hidden': $store.navigationDrawer.on }",
 		class="selection:bg-cetek-200"
 	)
+		<!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TPVDJL4T"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+
 		#app
 			block fixed
 				+AppNavigationDrawer
