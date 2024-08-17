@@ -13,9 +13,7 @@
 	"author": "myB <myasarbardaklar47@gmail.com>",
 	"license": "ISC",
 	"dependencies": {
-		"@vercel/kv": "^2.0.0",
-		"@vercel/node": "^3.2.8",
-		"concurrently": "^8.2.2",
+		"@vercel/blob": "^0.23.4",
 		"cookie-parser": "^1.4.6",
 		"dotenv": "^16.4.5",
 		"express": "^4.18.2",

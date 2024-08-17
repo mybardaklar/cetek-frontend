@@ -8,7 +8,6 @@ const logger = require("morgan");
 const i18next = require("i18next");
 const i18nextMiddleware = require("i18next-http-middleware");
 const Backend = require("i18next-fs-backend");
-const kv = require("@vercel/kv").kv;
 
 const AppService = require("../app/app.service");
 const AppRoute = require("../app/app.route");
@@ -46,42 +45,14 @@ app.use(async (req, res, next) => {
 
 	try {
 		// set site settings to Vercel KV and res.locals
-		const cachedSiteSettings = await kv.get("siteSettings");
-
-		if (cachedSiteSettings) {
-			app.locals.siteSettings = await cachedSiteSettings[res.locals.language];
-		} else {
-			const enSiteSettings = await appService.getSiteSettings("en");
-			const trSiteSettings = await appService.getSiteSettings("tr");
-
-			const siteSettings = {
-				en: enSiteSettings,
-				tr: trSiteSettings,
-			};
-
-			await kv.set("siteSettings", JSON.stringify(siteSettings));
-			app.locals.siteSettings = await siteSettings[res.locals.language];
-		}
+		const siteSettings = await appService.getSiteSettings();
+		app.locals.siteSettings = siteSettings[res.locals.language];
 
 		// set some product categories to Vercel KV and res.locals
-		const cachedSomeProductCategories = await kv.get("someProductCategories");
-		if (cachedSomeProductCategories) {
-			app.locals.someProductCategories =
-				await cachedSomeProductCategories[res.locals.language];
-		} else {
-			const enSomeProductCategories = await appService.getSomeProductCategories("en");
-			const trSomeProductCategories = await appService.getSomeProductCategories("tr");
+		const someProductCategories = await appService.getProductCategories();
+		app.locals.someProductCategories = someProductCategories[res.locals.language].slice(0, 4);
 
-			const someProductCategories = {
-				en: enSomeProductCategories,
-				tr: trSomeProductCategories,
-			};
-
-			await kv.set("someProductCategories", JSON.stringify(someProductCategories));
-			app.locals.someProductCategories = await someProductCategories[res.locals.language];
-		}
-
-		app.locals.PageProps = await {
+		app.locals.PageProps = {
 			titlePrefix: app.locals.siteSettings.meta_title,
 			title: "",
 			metaDescription: "",
