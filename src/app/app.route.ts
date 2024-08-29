@@ -1,11 +1,12 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
 
-const AppController = require("./app.controller");
+import AppController from "./app.controller";
 
-router.get("/", AppController.home);
+const router = Router();
 
-router.get("/refreshCache", AppController.cron);
+router.get("/", AppController.index);
+
+// router.get("/refreshCache", AppController.cron);
 
 router.get("/contact", AppController.contact);
 router.get("/iletisim", AppController.contact);
@@ -15,4 +16,4 @@ router.get("/galeri", AppController.gallery);
 
 router.get("/:link", AppController.findAllProducts);
 
-module.exports = router;
+export default router;

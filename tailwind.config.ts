@@ -3,7 +3,7 @@ import defaultTheme from "tailwindcss/defaultTheme";
 
 const config = {
 	darkMode: ["class"],
-	content: ["./public/**/*.{html,pug,js}", "./views/**/*.{html,pug,js}"],
+	content: ["./public/**/*.{html,pug,js}", "./src/views/**/*.{html,pug,js}"],
 	theme: {
 		screens: {
 			xs: "425px",

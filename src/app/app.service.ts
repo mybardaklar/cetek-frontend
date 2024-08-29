@@ -1,36 +1,16 @@
-const axiosInstance = require("../lib/axios");
-const { put, del, list } = require("@vercel/blob");
+import Redis from "ioredis";
+
+import axiosInstance from "../lib/axios";
+
+const redis = new Redis();
 
 class AppService {
-	async deleteAllBlobs() {
-		let cursor;
-
-		do {
-			const listResult = await list({
-				cursor,
-				limit: 1000,
-			});
-
-			if (listResult.blobs.length > 0) {
-				await del(listResult.blobs.map((blob) => blob.url));
-			}
-
-			cursor = listResult.cursor;
-		} while (cursor);
-
-		console.log("All blobs were deleted");
-	}
-
-	async getSiteSettings() {
+	static async getSiteSettings() {
 		try {
-			const { blobs } = await list();
-			const cachedBlob = blobs.filter(
-				(blobItem) => blobItem.pathname === "siteSettings.json",
-			);
+			const cachedData = await redis.get("siteSettings");
 
-			if (cachedBlob && cachedBlob.length) {
-				const request = await axiosInstance.get(cachedBlob[0].url);
-				return request.data;
+			if (cachedData) {
+				return JSON.parse(cachedData);
 			} else {
 				console.log("request:getSiteSettings");
 
@@ -45,28 +25,21 @@ class AppService {
 					tr: trRequest.data.acf,
 				};
 
-				await put("siteSettings.json", JSON.stringify(data), {
-					access: "public",
-					addRandomSuffix: false,
-				});
+				await redis.set("siteSettings", JSON.stringify(data), "EX", 3600);
 
 				return data;
 			}
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	}
 
-	async getHomePageSettings() {
+	static async getHomePageSettings() {
 		try {
-			const { blobs } = await list();
-			const cachedBlob = blobs.filter(
-				(blobItem) => blobItem.pathname === "homePageSettings.json",
-			);
+			const cachedData = await redis.get("homePageSettings");
 
-			if (cachedBlob && cachedBlob.length) {
-				const request = await axiosInstance.get(cachedBlob[0].url);
-				return request.data;
+			if (cachedData) {
+				return JSON.parse(cachedData);
 			} else {
 				console.log("request:getHomePageSettings");
 
@@ -81,28 +54,21 @@ class AppService {
 					tr: trRequest.data.acf,
 				};
 
-				await put("homePageSettings.json", JSON.stringify(data), {
-					access: "public",
-					addRandomSuffix: false,
-				});
+				await redis.set("homePageSettings", JSON.stringify(data), "EX", 3600);
 
 				return data;
 			}
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	}
 
-	async getSectoralNozzles() {
+	static async getSectoralNozzles() {
 		try {
-			const { blobs } = await list();
-			const cachedBlob = blobs.filter(
-				(blobItem) => blobItem.pathname === "sectoralNozzles.json",
-			);
+			const cachedData = await redis.get("sectoralNozzles");
 
-			if (cachedBlob && cachedBlob.length) {
-				const request = await axiosInstance.get(cachedBlob[0].url);
-				return request.data;
+			if (cachedData) {
+				return JSON.parse(cachedData);
 			} else {
 				console.log("request:getSectoralNozzles");
 
@@ -117,10 +83,7 @@ class AppService {
 					tr: trRequest.data,
 				};
 
-				await put("sectoralNozzles.json", JSON.stringify(data), {
-					access: "public",
-					addRandomSuffix: false,
-				});
+				await redis.set("sectoralNozzles", JSON.stringify(data), "EX", 3600);
 
 				return data;
 			}
@@ -129,16 +92,12 @@ class AppService {
 		}
 	}
 
-	async getProductsPageSettings() {
+	static async getProductsPageSettings() {
 		try {
-			const { blobs } = await list();
-			const cachedBlob = blobs.filter(
-				(blobItem) => blobItem.pathname === "productsPageSettings.json",
-			);
+			const cachedData = await redis.get("productsPageSettings");
 
-			if (cachedBlob && cachedBlob.length) {
-				const request = await axiosInstance.get(cachedBlob[0].url);
-				return request.data;
+			if (cachedData) {
+				return JSON.parse(cachedData);
 			} else {
 				console.log("request:getProductsPageSettings");
 
@@ -153,29 +112,21 @@ class AppService {
 					tr: trRequest.data.acf,
 				};
 
-				await put("productsPageSettings.json", JSON.stringify(data), {
-					access: "public",
-					addRandomSuffix: false,
-				});
+				await redis.set("productsPageSettings", JSON.stringify(data), "EX", 3600);
 
 				return data;
 			}
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	}
 
-	async getProductCategories() {
+	static async getProductCategories() {
 		try {
-			const { blobs } = await list();
-			const cachedBlob = blobs.filter(
-				(blobItem) => blobItem.pathname === "productCategories.json",
-			);
+			const cachedData = await redis.get("productCategories");
 
-			if (cachedBlob && cachedBlob.length) {
-				const request = await axiosInstance.get(cachedBlob[0].url);
-
-				return request.data;
+			if (cachedData) {
+				return JSON.parse(cachedData);
 			} else {
 				console.log("request:getProductCategories");
 
@@ -190,10 +141,7 @@ class AppService {
 					tr: trRequest.data,
 				};
 
-				await put("productCategories.json", JSON.stringify(data), {
-					access: "public",
-					addRandomSuffix: false,
-				});
+				await redis.set("productCategories", JSON.stringify(data), "EX", 3600);
 
 				return data;
 			}
@@ -202,7 +150,7 @@ class AppService {
 		}
 	}
 
-	async getProductsByCategory(lang, categoryId) {
+	static async getProductsByCategory(lang: any, categoryId: any) {
 		try {
 			const request = await axiosInstance.get(
 				`/product?_fields=id,status,slug,title,product_category,acf,lang,translations&acf_format=standard&per_page=100&lang=${lang}&product_category=${categoryId}`,
@@ -214,7 +162,7 @@ class AppService {
 		}
 	}
 
-	async getProductBySlug(lang, slug) {
+	static async getProductBySlug(lang: any, slug: any) {
 		try {
 			const request = await axiosInstance.get(
 				`/product?_fields=id,status,slug,title,product_category,acf,lang,translations&acf_format=standard&lang=${lang}&slug=${slug}`,
@@ -226,7 +174,7 @@ class AppService {
 		}
 	}
 
-	async getProductByID(lang, id) {
+	static async getProductByID(lang: any, id: any) {
 		try {
 			const request = await axiosInstance.get(
 				`/product/${id}?_fields=id,status,slug,title,product_category,acf,lang,translations&acf_format=standard`,
@@ -238,16 +186,12 @@ class AppService {
 		}
 	}
 
-	async getGalleryPageSettings() {
+	static async getGalleryPageSettings() {
 		try {
-			const { blobs } = await list();
-			const cachedBlob = blobs.filter(
-				(blobItem) => blobItem.pathname === "galleryPageSettings.json",
-			);
+			const cachedData = await redis.get("galleryPageSettings");
 
-			if (cachedBlob && cachedBlob.length) {
-				const request = await axiosInstance.get(cachedBlob[0].url);
-				return request.data;
+			if (cachedData) {
+				return JSON.parse(cachedData);
 			} else {
 				console.log("request:getGalleryPageSettings");
 
@@ -262,29 +206,21 @@ class AppService {
 					tr: trRequest.data.acf,
 				};
 
-				await put("galleryPageSettings.json", JSON.stringify(data), {
-					access: "public",
-					addRandomSuffix: false,
-				});
+				await redis.set("galleryPageSettings", JSON.stringify(data), "EX", 3600);
 
 				return data;
 			}
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	}
 
-	async getGalleryImages() {
+	static async getGalleryImages() {
 		try {
-			const { blobs } = await list();
-			const cachedBlob = blobs.filter(
-				(blobItem) => blobItem.pathname === "galleryImages.json",
-			);
+			const cachedData = await redis.get("galleryImages");
 
-			if (cachedBlob && cachedBlob.length) {
-				const request = await axiosInstance.get(cachedBlob[0].url);
-
-				return request.data;
+			if (cachedData) {
+				return JSON.parse(cachedData);
 			} else {
 				console.log("request:getGalleryImages");
 
@@ -299,10 +235,7 @@ class AppService {
 					tr: trRequest.data,
 				};
 
-				await put("galleryImages.json", JSON.stringify(data), {
-					access: "public",
-					addRandomSuffix: false,
-				});
+				await redis.set("galleryImages", JSON.stringify(data), "EX", 3600);
 
 				return data;
 			}
@@ -311,16 +244,12 @@ class AppService {
 		}
 	}
 
-	async getContactPageSettings() {
+	static async getContactPageSettings() {
 		try {
-			const { blobs } = await list();
-			const cachedBlob = blobs.filter(
-				(blobItem) => blobItem.pathname === "contactPageSettings.json",
-			);
+			const cachedData = await redis.get("contactPageSettings");
 
-			if (cachedBlob && cachedBlob.length) {
-				const request = await axiosInstance.get(cachedBlob[0].url);
-				return request.data;
+			if (cachedData) {
+				return JSON.parse(cachedData);
 			} else {
 				console.log("request:getContactPageSettings");
 
@@ -335,29 +264,21 @@ class AppService {
 					tr: trRequest.data.acf,
 				};
 
-				await put("contactPageSettings.json", JSON.stringify(data), {
-					access: "public",
-					addRandomSuffix: false,
-				});
+				await redis.set("contactPageSettings", JSON.stringify(data), "EX", 3600);
 
 				return data;
 			}
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 	}
 
-	async getContactInformations() {
+	static async getContactInformations() {
 		try {
-			const { blobs } = await list();
-			const cachedBlob = blobs.filter(
-				(blobItem) => blobItem.pathname === "contactInformations.json",
-			);
+			const cachedData = await redis.get("contactInformations");
 
-			if (cachedBlob && cachedBlob.length) {
-				const request = await axiosInstance.get(cachedBlob[0].url);
-
-				return request.data;
+			if (cachedData) {
+				return JSON.parse(cachedData);
 			} else {
 				console.log("request:getContactInformations");
 
@@ -372,10 +293,7 @@ class AppService {
 					tr: trRequest.data,
 				};
 
-				await put("contactInformations.json", JSON.stringify(data), {
-					access: "public",
-					addRandomSuffix: false,
-				});
+				await redis.set("contactInformations", JSON.stringify(data), "EX", 3600);
 
 				return data;
 			}
@@ -385,4 +303,4 @@ class AppService {
 	}
 }
 
-module.exports = AppService;
+export default AppService;

@@ -1,27 +1,13 @@
-const app = require("express")();
+import { Request, Response, NextFunction } from "express";
 
-const AppService = require("./app.service");
+import AppService from "./app.service";
 
 class AppController {
-	static async cron(req, res, next) {
-		const appService = new AppService();
-
+	static async index(req: Request, res: Response, next: NextFunction) {
 		try {
-			await appService.deleteAllBlobs();
-
-			return res.redirect("/");
-		} catch (error) {
-			console.error(error);
-		}
-	}
-
-	static async home(req, res, next) {
-		const appService = new AppService();
-
-		try {
-			const pageSettings = await appService.getHomePageSettings();
-			const sectoralNozzles = await appService.getSectoralNozzles();
-			const homeProductCategories = await appService.getProductCategories();
+			const pageSettings = await AppService.getHomePageSettings();
+			const sectoralNozzles = await AppService.getSectoralNozzles();
+			const homeProductCategories = await AppService.getProductCategories();
 
 			return res.render("pages/Index/Index.page.pug", {
 				pageSettings: pageSettings[res.locals.language],
@@ -33,18 +19,16 @@ class AppController {
 		}
 	}
 
-	static async gallery(req, res, next) {
+	static async gallery(req: Request, res: Response, next: NextFunction) {
 		if (req.path === "/galeri" && res.locals.language === "en") {
 			return res.redirect("/gallery");
 		} else if (req.path === "/gallery" && res.locals.language === "tr") {
 			return res.redirect("/galeri");
 		}
 
-		const appService = new AppService();
-
 		try {
-			const pageSettings = await appService.getGalleryPageSettings();
-			const galleryImages = await appService.getGalleryImages();
+			const pageSettings = await AppService.getGalleryPageSettings();
+			const galleryImages = await AppService.getGalleryImages();
 
 			return res.render("pages/Gallery/Gallery.page.pug", {
 				pageSettings: pageSettings[res.locals.language],
@@ -55,18 +39,16 @@ class AppController {
 		}
 	}
 
-	static async contact(req, res, next) {
+	static async contact(req: Request, res: Response, next: NextFunction) {
 		if (req.path === "/iletisim" && res.locals.language === "en") {
 			return res.redirect("/contact");
 		} else if (req.path === "/contact" && res.locals.language === "tr") {
 			return res.redirect("/iletisim");
 		}
 
-		const appService = new AppService();
-
 		try {
-			const pageSettings = await appService.getContactPageSettings();
-			const contactInformations = await appService.getContactInformations();
+			const pageSettings = await AppService.getContactPageSettings();
+			const contactInformations = await AppService.getContactInformations();
 
 			req.i18n.t("pageContact.sectionForm.description", {
 				hrefFacebook: req.app.locals.siteSettings.website_settings.social_media["facebook"],
@@ -84,14 +66,9 @@ class AppController {
 		}
 	}
 
-	static async findAllProducts(req, res, next) {
-		const appService = new AppService();
-
-		// set products page settings to Vercel KV
-		let pageSettings = await appService.getProductsPageSettings();
-
-		// set product categories to Vercel KV
-		let productCategories = await appService.getProductCategories();
+	static async findAllProducts(req: any, res: Response, next: NextFunction) {
+		let pageSettings = await AppService.getProductsPageSettings();
+		let productCategories = await AppService.getProductCategories();
 
 		if (req.params.link === "urunler") {
 			if (res.locals.language !== "tr") return res.redirect("/products");
@@ -112,12 +89,12 @@ class AppController {
 
 			if (res.locals.language !== "tr") {
 				const productCategoryTranslations = productCategories.tr.filter(
-					(item) => item.slug === slug,
+					(item: any) => item.slug === slug,
 				)[0];
 
 				if (productCategoryTranslations) {
 					const productCategory = productCategories.en.filter(
-						(item) => item.id === productCategoryTranslations.translations.en,
+						(item: any) => item.id === productCategoryTranslations.translations.en,
 					)[0];
 
 					if (productCategory) {
@@ -130,9 +107,11 @@ class AppController {
 				return res.status(404).render("pages/Error/Error.page.pug");
 			}
 
-			let currentCategory = productCategories["tr"].filter((item) => item.slug === slug)[0];
+			let currentCategory = productCategories["tr"].filter(
+				(item: any) => item.slug === slug,
+			)[0];
 			if (currentCategory) {
-				const products = await appService.getProductsByCategory(
+				const products = await AppService.getProductsByCategory(
 					res.locals.language,
 					currentCategory.id,
 				);
@@ -150,12 +129,12 @@ class AppController {
 
 			if (res.locals.language !== "en") {
 				const productCategoryTranslations = productCategories.en.filter(
-					(item) => item.slug === slug,
+					(item: any) => item.slug === slug,
 				)[0];
 
 				if (productCategoryTranslations) {
 					const productCategory = productCategories.tr.filter(
-						(item) => item.id === productCategoryTranslations.translations.tr,
+						(item: any) => item.id === productCategoryTranslations.translations.tr,
 					)[0];
 
 					if (productCategory) {
@@ -168,9 +147,11 @@ class AppController {
 				return res.status(404).render("pages/Error/Error.page.pug");
 			}
 
-			let currentCategory = productCategories["en"].filter((item) => item.slug === slug)[0];
+			let currentCategory = productCategories["en"].filter(
+				(item: any) => item.slug === slug,
+			)[0];
 			if (currentCategory) {
-				const products = await appService.getProductsByCategory(
+				const products = await AppService.getProductsByCategory(
 					res.locals.language,
 					currentCategory.id,
 				);
@@ -185,13 +166,13 @@ class AppController {
 			return res.status(404).render("pages/Error/Error.page.pug");
 		} else {
 			if (req.query.lng) {
-				const product = await appService.getProductBySlug(
+				const product = await AppService.getProductBySlug(
 					res.locals.language === "en" ? "tr" : "en",
 					req.params.link,
 				);
 
 				if (product) {
-					const translatedProduct = await appService.getProductByID(
+					const translatedProduct = await AppService.getProductByID(
 						req.query.lng,
 						product.translations[req.query.lng],
 					);
@@ -205,14 +186,14 @@ class AppController {
 
 				return res.status(404).render("pages/Error/Error.page.pug");
 			} else {
-				const product = await appService.getProductBySlug(
+				const product = await AppService.getProductBySlug(
 					res.locals.language,
 					req.params.link,
 				);
 
 				if (product) {
 					const currentCategory = productCategories[res.locals.language].filter(
-						(item) => item.id === product.product_category[0],
+						(item: any) => item.id === product.product_category[0],
 					)[0];
 
 					if (currentCategory) {
@@ -234,4 +215,4 @@ class AppController {
 	}
 }
 
-module.exports = AppController;
+export default AppController;
