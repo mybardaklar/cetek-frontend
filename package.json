@@ -11,7 +11,7 @@
 		"dev:server": "env-cmd -f .env nodemon src/index.ts",
 		"dev": "npm-run-all --parallel dev:tailwindcss dev:server",
 		"build:tailwindcss": "tailwindcss build -i ./src/assets/css/tailwind.css -o ./public/css/tailwind.css",
-		"build:server": "env-cmd -f .env ts-node src/index.ts",
+		"build:server": "tsc -p .",
 		"build": "npm run build:tailwindcss && npm run build:server",
 		"serve": "node dist/src/index.js"
 	},
