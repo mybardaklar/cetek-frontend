@@ -2,7 +2,10 @@ import Redis from "ioredis";
 
 import axiosInstance from "../lib/axios";
 
-const redis = new Redis();
+const redis = new Redis({
+	host: process.env.SERVER_IP,
+	password: process.env.REDIS_PASSWORD,
+});
 
 class AppService {
 	static async getSiteSettings() {
