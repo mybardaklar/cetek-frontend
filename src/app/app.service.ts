@@ -1,10 +1,11 @@
 import Redis from "ioredis";
 
 import axiosInstance from "../lib/axios";
+import config from "../lib/config";
 
 const redis = new Redis({
-	host: process.env.SERVER_IP,
-	password: process.env.REDIS_PASSWORD,
+	host: config.SERVER_IP,
+	password: config.REDIS_PASSWORD,
 });
 
 class AppService {

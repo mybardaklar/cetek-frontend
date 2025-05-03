@@ -1,15 +1,15 @@
-import dotenv from "dotenv";
-import path from "path";
-import createError from "http-errors";
-import express, { Express, Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
-import logger from "morgan";
+import dotenv from "dotenv";
+import express, { NextFunction, Request, Response } from "express";
+import createError from "http-errors";
 import i18next from "i18next";
-import i18nextMiddleware from "i18next-http-middleware";
 import Backend from "i18next-fs-backend";
+import i18nextMiddleware from "i18next-http-middleware";
+import logger from "morgan";
+import path from "path";
 
-import AppService from "./app/app.service";
 import AppRouter from "./app/app.route";
+import AppService from "./app/app.service";
 
 dotenv.config();
 

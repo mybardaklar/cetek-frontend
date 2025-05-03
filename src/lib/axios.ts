@@ -1,9 +1,10 @@
 import axios from "axios";
+import config from "./config";
 
 const axiosInstance = axios.create({
-	baseURL: process.env.API_URL,
+	baseURL: config.API_URL,
 	headers: {
-		Authorization: process.env.API_KEY,
+		Authorization: config.API_KEY,
 	},
 });
 
