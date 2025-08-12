@@ -69,10 +69,10 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
 	}
 });
 
-// app.use("/", AppRouter);
-app.get("*", (req: Request, res: Response) => {
+app.use("/", AppRouter);
+/* app.get("*", (req: Request, res: Response) => {
 	return res.render("error.pug");
-});
+}); */
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
